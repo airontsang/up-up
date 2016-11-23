@@ -1,3 +1,7 @@
 this is a change in remote, I wanna pull it to local.
 second change.
+<<<<<<< HEAD
 forth in local.
+=======
+thrid change.
+>>>>>>> abae51da2f8b4b6991823685bfbb0278f0841d35
