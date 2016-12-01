@@ -4,3 +4,7 @@ local change
 zmj's{ 
   console.log("this is zhangminjie")
 }
+
+zhu's{
+  console.log("this is zhu")
+}
