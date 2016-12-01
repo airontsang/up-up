@@ -5,7 +5,6 @@ zmj's{
   console.log("this is zhangminjie")
 }
 
-zhu's{
-  console.log("this is zhu")
-}
+
 more diffs
+本地再来一点嘛
