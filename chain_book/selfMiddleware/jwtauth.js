@@ -11,7 +11,7 @@ module.exports = function (req, res, next) {
             if (decoded.exp <= Date.now()) {
                 res.end('Access token has expired', 400);
             }
-            User.getUserByloginId(decoded.iss, function (err, user) {
+            User.getUserById(decoded.iss, function (err, user) {
                     if (err) {
                         res.statusCode = 401
                         res.json(err)
@@ -25,20 +25,6 @@ module.exports = function (req, res, next) {
                         next();     //解析正确的next()
                     }
                 })
-                // UserModel.get(decoded.iss, function (err, user) {
-                //     if (err) {
-                //         res.statusCode = 401
-                //         res.json(err)
-                //         return res
-                //     }
-                //     if (!user) {
-                //         res.statusCode = 401
-                //         res.json('用户验证错误，请重新登录')
-                //         return res
-                //     }
-                //     res.locals.user = user
-                //     next();     //解析正确的next()
-                // })
         } catch (err) {
             console.log(err)
             return next(); //遇到了解析错误的next()

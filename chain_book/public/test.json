@@ -105,7 +105,7 @@
                 }
             }
         },
-        "/Books/addInfo": {
+        "/Books/addBook": {
             "post": {
                 "description": "Posts a `Books` object for DB\n",
                 "parameters": [
@@ -124,6 +124,30 @@
                         "required": true,
                         "type": "string",
                         "format": "string"
+                    },
+                    {
+                        "name": "booksIntro",
+                        "in": "query",
+                        "description": "booksIntro",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "booksPic",
+                        "in": "query",
+                        "description": "booksPic",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "booksPlace",
+                        "in": "query",
+                        "description": "booksPlace",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
                     }
                 ],
                 "tags": [
@@ -134,6 +158,132 @@
                         "description": "Successful response",
                         "schema": {
                             "title": "Books_Add_Info",
+                            "type": "object",
+                            "properties": {
+                                "msg": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error response",
+                        "schema": {
+                            "title": "reg_Error_Info",
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/Books/editBookInfo": {
+            "post": {
+                "description": "Posts a edited `Books` object for DB\n",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "bookId",
+                        "in": "query",
+                        "description": "ObjectId of book",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "booksTitle",
+                        "in": "query",
+                        "description": "booksTitle",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "booksIntro",
+                        "in": "query",
+                        "description": "booksIntro",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "booksPic",
+                        "in": "query",
+                        "description": "booksPic",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "booksPlace",
+                        "in": "query",
+                        "description": "booksPlace",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }
+                ],
+                "tags": [
+                    "Books"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "Books_Edit_Info",
+                            "type": "object",
+                            "properties": {
+                                "msg": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error response",
+                        "schema": {
+                            "title": "reg_Error_Info",
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/Books/delBook": {
+            "post": {
+                "description": "Del a book by ObjectId in MongoDB\n",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "bookId",
+                        "in": "query",
+                        "description": "ObjectId of book",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }
+                ],
+                "tags": [
+                    "Books"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "Books_Del_Info",
                             "type": "object",
                             "properties": {
                                 "msg": {

@@ -24,11 +24,11 @@ router.get('/Login*', function (req, res, next) {
       });
       return res;
     } else {
-      var expires = moment().add('days', 1).valueOf();
+      var expires = moment().add(1, 'days').valueOf();
       var token = jwt.encode({
         iss: user.loginId,
         exp: expires
-      }, 'MY_SCRECT_KEY')
+      }, 'MY_SECRET_STRING')
       res.json({
         msg: '登录成功!',
         token: token

@@ -12,8 +12,9 @@ var Book = models.Book;
 
 exports.newAndSave = function (bookF, callback) {
     var book = new Book();
-    book.title = bookF.title;
     book.founderId = bookF.founderId;
+    book.title = bookF.title;
+    book.place = bookF.place;
     book.intro = bookF.intro;
     book.picUrl = bookF.picUrl;
 
@@ -32,7 +33,7 @@ exports.newAndSave = function (bookF, callback) {
 exports.editBookById = function(id, newBook, callback) {
     var book = new Book();
     book.title = newBook.title;
-    // book.founderId = bookF.founderId;
+    book.place = bookF.place;
     book.intro = newBook.intro;
     book.picUrl = newBook.picUrl;
 
