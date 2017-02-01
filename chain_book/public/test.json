@@ -177,8 +177,8 @@
             }
         },
         "/Books/editBookInfo": {
-            "post": {
-                "description": "Posts a edited `Books` object for DB\n",
+            "put": {
+                "description": "Posts a modified `Books` object for DB\n",
                 "parameters": [
                     {
                         "name": "access_token",
@@ -256,7 +256,7 @@
             }
         },
         "/Books/delBook": {
-            "post": {
+            "delete": {
                 "description": "Del a book by ObjectId in MongoDB\n",
                 "parameters": [
                     {
