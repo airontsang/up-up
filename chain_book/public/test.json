@@ -1,0 +1,156 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "毕业设计后台API"
+    },
+    "paths": {
+        "/User/Login": {
+            "get": {
+                "description": "Login \n",
+                "parameters": [
+                    {
+                        "name": "loginId",
+                        "in": "query",
+                        "description": "loginId",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "passWord",
+                        "in": "query",
+                        "description": "password",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }
+                ],
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "Login_Info",
+                            "type": "object",
+                            "properties": {
+                                "loginId": {
+                                    "type": "string"
+                                },
+                                "token": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error response",
+                        "schema": {
+                            "title": "Login_Error_Info",
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/User/reg": {
+            "post": {
+                "description": "Posts a `User` object fro Signin\n",
+                "parameters": [
+                    {
+                        "name": "loginId",
+                        "in": "query",
+                        "description": "loginId",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "passWord",
+                        "in": "query",
+                        "description": "password",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }
+                ],
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "Signin_Info",
+                            "type": "object",
+                            "properties": {
+                                "msg": {
+                                    "type": "string"
+                                },
+                                "loginId": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error response",
+                        "schema": {
+                            "title": "reg_Error_Info",
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/Books/addInfo": {
+            "post": {
+                "description": "Posts a `Books` object for DB\n",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "booksTitle",
+                        "in": "query",
+                        "description": "booksTitle",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }
+                ],
+                "tags": [
+                    "Books"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "Books_Add_Info",
+                            "type": "object",
+                            "properties": {
+                                "msg": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error response",
+                        "schema": {
+                            "title": "reg_Error_Info",
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
