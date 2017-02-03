@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var ObjectId = Schema.ObjectId;
 
 var BookSchema = new Schema({
     founderId: { type: ObjectId },
@@ -7,6 +8,7 @@ var BookSchema = new Schema({
     place: { type: String },
     intro: { type: String },
     picUrl: { type: String },
+    create_at: { type: Date, default: Date.now },
     update_at: { type: Date, default: Date.now }
 })
 BookSchema.pre('save', function(next){

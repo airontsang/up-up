@@ -17,7 +17,14 @@ router.get('/Login*', function (req, res, next) {
         msg: '后台错误'
       });
       return res;
-    } else if (!user || user.passWord != passWord) {
+    } else {
+      if (!user) {
+      res.statusCode = 401;
+      res.json({
+        msg: '用户不存在'
+      });
+      return res;
+    } else if (user.passWord != passWord){
       res.statusCode = 401;
       res.json({
         msg: '用户名或密码错误'
@@ -33,6 +40,7 @@ router.get('/Login*', function (req, res, next) {
         msg: '登录成功!',
         token: token
       })
+    }
     }
   })
 });

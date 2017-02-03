@@ -5,7 +5,8 @@ var UserSchema = new Schema({
     loginId: {type: String},
     passWord: {type: String},
     nameId: {type: String},
-    update_at: { type: Date, default: Date.now }
+    create_at: { type: Date, default: Date.now },
+    update_at: { type: Date, default: Date.now },
 })
 UserSchema.pre('save', function(next){
     var now = new Date();

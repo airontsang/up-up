@@ -15,5 +15,7 @@ mongoose.connect(config.db, {
 
 //models
 require('./user')
+require('./book')
 
 exports.User = mongoose.model('User')
+exports.Book = mongoose.model('Book')
