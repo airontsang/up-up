@@ -27,14 +27,16 @@ var authIsUser = function (req, res, next) {
                 }
             })
         } catch (err) {
-            console.log(err)
             res.statusCode = 401
             res.json('用户验证错误，请重新登录')
             return res
                 // return next(); //遇到了解析错误的next()
         }
     } else {
-        next(); //没有token的next()
+        res.statusCode = 401
+        res.json('用户验证错误，请重新登录')
+        return res
+        // next(); //没有token的next()
     }
 }
 
@@ -57,8 +59,7 @@ var authIsBookOwner = function (req, res, next) {
                         res.statusCode = 401
                         res.json('账本不存在')
                         return res
-                    }
-                    else if (book.founderId.toString() != res.locals.user._id.toString()) {                  
+                    } else if (book.founderId.toString() != res.locals.user._id.toString()) {
                         res.statusCode = 401
                         res.json('无权限操作该账本')
                         return res
@@ -76,7 +77,10 @@ var authIsBookOwner = function (req, res, next) {
                 // return next(); //遇到了解析错误的next()
         }
     } else {
-        next(); //没有token的next()
+        res.statusCode = 401
+        res.json('用户验证错误，请重新登录')
+        return res
+        // next(); //没有token的next()
     }
 }
 

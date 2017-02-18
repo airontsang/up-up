@@ -36,10 +36,10 @@ router.post('/bookPic/uploading', function (req, res, next) {
 router.post('/addBook*', jwtauth.authIsUser, function (req, res, next) {
     var newBook = {};
     newBook.founderId = res.locals.user._id;
-    newBook.title = req.query.booksTitle;
-    newBook.place = req.query.booksPlace;
-    newBook.intro = req.query.booksIntro;
-    newBook.picUrl = req.query.booksPic;
+    newBook.title = req.query.bookTitle;
+    newBook.place = req.query.bookPlace;
+    newBook.intro = req.query.bookIntro;
+    newBook.picUrl = req.query.bookPic;
     
     Book.newAndSave(newBook, function (err, book) {
         if (err) {
@@ -56,14 +56,29 @@ router.post('/addBook*', jwtauth.authIsUser, function (req, res, next) {
     })
 });
 
+router.get('/getBooks*', jwtauth.authIsUser, function (req, res, next) { 
+    Book.queryBookByPage(res.locals.user._id, req.query.pageIndex, req.query.pageSize, function (err, book) {
+        if (err) {
+            console.log(err)
+            res.statusCode = 401;
+            res.json({
+                msg: '后台错误'
+            });
+            return res;
+        } else {
+            res.json(book)
+        }
+    })
+});
+
 router.put('/editBookInfo*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], function (req, res, next) {
     // var modifiedBook = new BookModel();
     var modifiedBook = {};
     modifiedBook.founderId = res.locals.user._id;
-    modifiedBook.title = req.query.booksTitle;
-    modifiedBook.place = req.query.booksPlace;
-    modifiedBook.intro = req.query.booksIntro;
-    modifiedBook.picUrl = req.query.booksPic;
+    modifiedBook.title = req.query.bookTitle;
+    modifiedBook.place = req.query.bookPlace;
+    modifiedBook.intro = req.query.bookIntro;
+    modifiedBook.picUrl = req.query.bookPic;
 
     Book.editBookById(req.query.bookId, modifiedBook, function (err, query){
         if (err) {

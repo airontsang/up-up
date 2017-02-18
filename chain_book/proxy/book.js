@@ -1,5 +1,6 @@
 var models = require('../models');
 var Book = models.Book;
+var async = require('async')
 
 /**
  * 新增一个账本的基本信息
@@ -66,21 +67,24 @@ exports.getBookById = function(id, callback) {
 }
 
 /**
- * 根据账本Id更新账本信息
+ * 根据账本ObjectId, page, pageSize查找账本
  * Callback:
  * - err, 数据库异常
  * - Query, 结果对象
- * @param {String} id 账本id
- * @param {Object} id 存有新信息的账本对象
+ * @param {ObjectId} id 创建人id
+ * @param {String} page 页码
+ * @param {String} pageSize 每页大小  
  * @param {Function} callback 回调函数
  */
-// exports.editBookById = function(id, modifiedBook, callback) {
-//     // Book.findOne({_id: id}, function (err, book) {
-//     //     if (err) {
-//     //         return callback(err || !book)
-//     //     }
-//     //     book = modifiedBook;
-//     //     book.save(callback);
-//     // })
-//     Book.findOneAndUpdate({_id: id}, modifiedBook, callback);
-// }
+exports.queryBookByPage = function(founderId, page, pageSize, callback) {
+    var start = (page - 1) * pageSize;
+    var opt = { "_id": 0, "picUrl": 1, "intro": 1, "place": 1, "title": 1, "create_at": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明
+    var $page = {
+        pageNumber: page
+    };
+    Book.find({ founderId: founderId }, opt).skip(start).limit(Number(pageSize)).sort({update_at: 'desc'}).exec(
+        function (err, doc) {
+            callback(err, doc)
+        }
+    )
+}

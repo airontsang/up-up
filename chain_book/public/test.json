@@ -118,33 +118,33 @@
                         "format": "string"
                     },
                     {
-                        "name": "booksTitle",
+                        "name": "bookTitle",
                         "in": "query",
-                        "description": "booksTitle",
+                        "description": "bookTitle",
                         "required": true,
                         "type": "string",
                         "format": "string"
                     },
                     {
-                        "name": "booksIntro",
+                        "name": "bookIntro",
                         "in": "query",
-                        "description": "booksIntro",
+                        "description": "bookIntro",
                         "required": true,
                         "type": "string",
                         "format": "string"
                     },
                     {
-                        "name": "booksPic",
+                        "name": "bookPic",
                         "in": "query",
-                        "description": "booksPic",
+                        "description": "bookPic",
                         "required": true,
                         "type": "string",
                         "format": "string"
                     },
                     {
-                        "name": "booksPlace",
+                        "name": "bookPlace",
                         "in": "query",
-                        "description": "booksPlace",
+                        "description": "bookPlace",
                         "required": true,
                         "type": "string",
                         "format": "string"
@@ -176,6 +176,70 @@
                 }
             }
         },
+        "/Books/getBooks": {
+            "get": {
+                "description": "Get `Books` object for DB by pageIndex and numOnePage \n",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "token",
+                        "required": false,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "pageIndex",
+                        "in": "query",
+                        "description": "页码",
+                        "required": true,
+                        "type": "number",
+                        "format": "number"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "每页的数量",
+                        "required": true,
+                        "type": "number",
+                        "format": "number"
+                    }
+                ],
+                "tags": [
+                    "Books"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "Books_Add_Info",
+                            "type": "object",
+                            "properties": {
+                                "bookTitle": {
+                                    "type": "string"
+                                },
+                                "bookIntro": {
+                                    "type": "string"
+                                },
+                                "bookPlace": {
+                                    "type": "string"
+                                },
+                                "bookPic": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error response",
+                        "schema": {
+                            "title": "get_books_Error",
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/Books/editBookInfo": {
             "put": {
                 "description": "Posts a modified `Books` object for DB\n",
@@ -197,33 +261,33 @@
                         "format": "string"
                     },
                     {
-                        "name": "booksTitle",
+                        "name": "bookTitle",
                         "in": "query",
-                        "description": "booksTitle",
+                        "description": "bookTitle",
                         "required": true,
                         "type": "string",
                         "format": "string"
                     },
                     {
-                        "name": "booksIntro",
+                        "name": "bookIntro",
                         "in": "query",
-                        "description": "booksIntro",
+                        "description": "bookIntro",
                         "required": true,
                         "type": "string",
                         "format": "string"
                     },
                     {
-                        "name": "booksPic",
+                        "name": "bookPic",
                         "in": "query",
-                        "description": "booksPic",
+                        "description": "bookPic",
                         "required": true,
                         "type": "string",
                         "format": "string"
                     },
                     {
-                        "name": "booksPlace",
+                        "name": "bookPlace",
                         "in": "query",
-                        "description": "booksPlace",
+                        "description": "bookPlace",
                         "required": true,
                         "type": "string",
                         "format": "string"
