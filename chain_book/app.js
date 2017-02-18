@@ -7,7 +7,8 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var book = require('./routes/books')
+var book = require('./routes/books');
+var toBlock = require('./routes/toBlock');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use('/static', express.static('public'));
 app.use('/', index);
 app.use('/User', users);
 app.use('/Books', book);
+app.use('/toBlock', toBlock);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,6 +46,20 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+//allow custom header and CORS
+app.all('*',function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+
+  if (req.method == 'OPTIONS') {
+    res.send(200); /让options请求快速返回/
+  }
+  else {
+    next();
+  }
 });
 
 module.exports = app;

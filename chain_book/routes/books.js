@@ -5,6 +5,34 @@ var models = require('../models');
 var BookModel = models.Book;
 var jwtauth = require('../selfMiddleware/jwtauth');
 
+var multiparty = require('multiparty');
+var util = require('util');
+var fs = require('fs');
+
+router.post('/bookPic/uploading', function (req, res, next) {
+    //生成multiparty对象，并配置上传目标路径
+    var form = new multiparty.Form({uploadDir: './public/files/'});
+    form.parse(req, function(err, fields, files) {
+        console.log(files.images[0].originalFilename);
+        console.log(files.images[0].path);
+        var _tmp = files.images[0].originalFilename.split('.');
+        var type = _tmp[_tmp.length-1];
+        var tmp_name = (Date.parse(new Date()) / 1000) + '' + (Math.round(Math.random() * 9999)) + '.' + type;//生成随机名称
+        var newPath = './public/files/' + tmp_name;
+        fs.rename(files.images[0].path, newPath, function(err) {
+          if(err){
+            console.log('rename error: ' + err);
+          } else {
+            console.log('rename ok');
+          }
+        });
+      res.json({
+          msg: "上传成功",
+          name: tmp_name
+      })
+      console.log("完成")
+   });
+});
 router.post('/addBook*', jwtauth.authIsUser, function (req, res, next) {
     var newBook = {};
     newBook.founderId = res.locals.user._id;
