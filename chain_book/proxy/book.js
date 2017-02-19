@@ -67,7 +67,7 @@ exports.getBookById = function(id, callback) {
 }
 
 /**
- * 根据账本ObjectId, page, pageSize查找账本
+ * 根据某创建人ObjectId, page, pageSize查找属于该用户的全部账本
  * Callback:
  * - err, 数据库异常
  * - Query, 结果对象
@@ -76,9 +76,9 @@ exports.getBookById = function(id, callback) {
  * @param {String} pageSize 每页大小  
  * @param {Function} callback 回调函数
  */
-exports.queryBookByPage = function(founderId, page, pageSize, callback) {
+exports.queryBookByFounder = function(founderId, page, pageSize, callback) {
     var start = (page - 1) * pageSize;
-    var opt = { "_id": 0, "picUrl": 1, "intro": 1, "place": 1, "title": 1, "create_at": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明
+    var opt = { "_id": 1, "picUrl": 1, "intro": 1, "place": 1, "title": 1, "create_at": 1, "isPublic": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明
     var $page = {
         pageNumber: page
     };

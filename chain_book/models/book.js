@@ -9,7 +9,8 @@ var BookSchema = new Schema({
     intro: { type: String },
     picUrl: { type: String },
     create_at: { type: Date, default: Date.now },
-    update_at: { type: Date, default: Date.now }
+    update_at: { type: Date, default: Date.now },
+    isPublic: { type: Boolean }
 })
 BookSchema.pre('save', function(next){
     var now = new Date();

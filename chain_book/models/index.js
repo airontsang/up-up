@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var config = require('../config');
 
+mongoose.Promise = global.Promise;  //使用nodejs的Promise
 mongoose.connect(config.db, {
     server: {
         poolSize: 20
@@ -16,6 +17,8 @@ mongoose.connect(config.db, {
 //models
 require('./user')
 require('./book')
+require('./bookItem')
 
 exports.User = mongoose.model('User')
 exports.Book = mongoose.model('Book')
+exports.BookItem = mongoose.model('BookItem')

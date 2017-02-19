@@ -8,7 +8,9 @@ var jwtauth = require('../selfMiddleware/jwtauth');
 var multiparty = require('multiparty');
 var util = require('util');
 var fs = require('fs');
+var path = require('path');
 
+//图片上传，后要添加是否为user的判断
 router.post('/bookPic/uploading', function (req, res, next) {
     //生成multiparty对象，并配置上传目标路径
     var form = new multiparty.Form({uploadDir: './public/files/'});
@@ -33,6 +35,7 @@ router.post('/bookPic/uploading', function (req, res, next) {
       console.log("完成")
    });
 });
+
 router.post('/addBook*', jwtauth.authIsUser, function (req, res, next) {
     var newBook = {};
     newBook.founderId = res.locals.user._id;
@@ -57,7 +60,7 @@ router.post('/addBook*', jwtauth.authIsUser, function (req, res, next) {
 });
 
 router.get('/getBooks*', jwtauth.authIsUser, function (req, res, next) { 
-    Book.queryBookByPage(res.locals.user._id, req.query.pageIndex, req.query.pageSize, function (err, book) {
+    Book.queryBookByFounder(res.locals.user._id, req.query.pageIndex, req.query.pageSize, function (err, book) {
         if (err) {
             console.log(err)
             res.statusCode = 401;
@@ -68,6 +71,20 @@ router.get('/getBooks*', jwtauth.authIsUser, function (req, res, next) {
         } else {
             res.json(book)
         }
+    })
+});
+
+router.get('/getBookPic*', function (req, res, next) {
+    fs.readFile('./public/files/' + req.query.fileName, function (err, data) {
+        if(err) {
+            console.error(err);
+            return;
+        }
+        console.log('读取成功');
+        res.writeHead(200, {'Content-Type': 'image/jpeg'});
+        res.write(data, 'binary');
+        res.end();
+        return;
     })
 });
 
