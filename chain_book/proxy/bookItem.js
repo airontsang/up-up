@@ -13,6 +13,7 @@ var async = require('async')
 
 exports.newAndSave = function (bookItemF, callback) {
     var bookItem = new BookItem();
+    bookItem.bookId = bookItemF.bookId;
     bookItem.content = bookItemF.content;
     bookItem.charge = bookItemF.charge;
 
@@ -73,7 +74,7 @@ exports.getBookItemById = function(id, callback) {
  */
 exports.querySomeBookItemByBook = function(bookId, page, pageSize, callback) {
     var start = (page - 1) * pageSize;
-    var opt = { "_id": 1, "picUrl": 1, "intro": 1, "place": 1, "title": 1, "create_at": 1, "isPublic": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明
+    var opt = { "_id": 1, "charge": 1, "content": 1, "update_at": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明
     
     BookItem.find({ bookId: bookId }, opt).skip(start).limit(Number(pageSize)).sort({update_at: 'desc'}).exec(
         function (err, doc) {

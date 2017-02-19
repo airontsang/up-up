@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var book = require('./routes/books');
+var bookItem = require('./routes/bookItem');
 var toBlock = require('./routes/toBlock');
 
 var app = express();
@@ -28,6 +29,7 @@ app.use('/static', express.static('public'));
 app.use('/', index);
 app.use('/User', users);
 app.use('/Books', book);
+app.use('/BookItem', bookItem);
 app.use('/toBlock', toBlock);
 
 // catch 404 and forward to error handler
