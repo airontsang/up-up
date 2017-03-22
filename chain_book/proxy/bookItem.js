@@ -82,3 +82,21 @@ exports.querySomeBookItemByBook = function(bookId, page, pageSize, callback) {
         }
     )
 }
+
+/**
+ * 根据某账本ObjectId查找属于该账本的全部细则
+ * Callback:
+ * - err, 数据库异常
+ * - Query, 结果对象
+ * @param {ObjectId} bookId 某账本id 
+ * @param {Function} callback 回调函数
+ */
+exports.getAllBookItemByBookId = function(bookId, callback) {
+    var start = (page - 1) * pageSize;
+    
+    BookItem.find({ bookId: bookId }).sort({update_at: 'desc'}).exec(
+        function (err, doc) {
+            callback(err, doc)
+        }
+    )
+}

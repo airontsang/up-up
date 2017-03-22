@@ -5,6 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var schedule = require("node-schedule");
+var getBlockToken = require('./selfMiddleware/blockChain')
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 var book = require('./routes/books');
@@ -21,7 +24,9 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -33,14 +38,14 @@ app.use('/BookItem', bookItem);
 app.use('/toBlock', toBlock);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -51,17 +56,30 @@ app.use(function(err, req, res, next) {
 });
 
 //allow custom header and CORS
-app.all('*',function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
+app.all('*', function (req, res, next) {
+  res.addHeader('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 
   if (req.method == 'OPTIONS') {
-    res.send(200); /让options请求快速返回/
-  }
-  else {
+    res.send(200);
+    /让options请求快速返回/
+  } else {
     next();
   }
 });
+console.log("进来就执行");
+getBlockToken.getBlockToken();
+var rule = new schedule.RecurrenceRule();
+
+rule.minute = 1;
+
+var j = schedule.scheduleJob(rule, function () {
+  console.log("执行任务");
+  getBlockToken.getBlockToken();
+
+});
+
+
 
 module.exports = app;
