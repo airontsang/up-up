@@ -67,7 +67,7 @@ exports.getBookById = function(id, callback) {
 }
 
 /**
- * 根据某创建人ObjectId, page, pageSize查找属于该用户的全部账本
+ * 根据账本ObjectId, page, pageSize查找属于该用户的全部账本
  * Callback:
  * - err, 数据库异常
  * - Query, 结果对象
@@ -83,6 +83,24 @@ exports.queryBookByFounder = function(founderId, page, pageSize, callback) {
         pageNumber: page
     };
     Book.find({ founderId: founderId }, opt).skip(start).limit(Number(pageSize)).sort({update_at: 'desc'}).exec(
+        function (err, doc) {
+            callback(err, doc)
+        }
+    )
+}
+
+/**
+ * 根据账本ObjectId,添加账本evidenceId内容
+ * Callback:
+ * - err, 数据库异常
+ * - Query, 结果对象
+ * @param {ObjectId} id 创建人id
+ * @param {String} page 页码
+ * @param {String} pageSize 每页大小  
+ * @param {Function} callback 回调函数
+ */
+exports.addEvidenceId = function(Id, evidenceId, callback) {
+    Book.update({ _id: Id }, {$set: { evidenceId: evidenceId }}).exec(
         function (err, doc) {
             callback(err, doc)
         }

@@ -10,11 +10,13 @@ var BookSchema = new Schema({
     picUrl: { type: String },
     create_at: { type: Date, default: Date.now },
     update_at: { type: Date, default: Date.now },
-    isPublic: { type: Boolean }
+    isPublic: { type: Boolean },
+    evidenceId: { type: String }
 })
 BookSchema.pre('save', function(next){
     var now = new Date();
     this.update_at = now;
+    this.evidenceId = '';
     next();
 });
 
