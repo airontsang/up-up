@@ -1,6 +1,7 @@
 var models = require('../models');
 var BookItem = models.BookItem;
-var async = require('async')
+var async = require('async');
+var Q = require('q');
 
 /**
  * 新增一个账本的基本信息
@@ -91,12 +92,21 @@ exports.querySomeBookItemByBook = function(bookId, page, pageSize, callback) {
  * @param {ObjectId} bookId 某账本id 
  * @param {Function} callback 回调函数
  */
+// exports.getAllBookItemByBookId = function(bookId) {
+//     var defer = Q.defer();  
+//     BookItem.find({ bookId: bookId }).sort({update_at: 'desc'}).exec(
+//         function (err, doc) {
+//             if(!err && doc) {
+//                 defer.resolve(doc);
+//             } else {
+//                 defer.reject(err)
+//             }
+//         })
+//         return defer.promise;
+// }
 exports.getAllBookItemByBookId = function(bookId, callback) {
-    var start = (page - 1) * pageSize;
-    
     BookItem.find({ bookId: bookId }).sort({update_at: 'desc'}).exec(
         function (err, doc) {
             callback(err, doc)
-        }
-    )
+        })
 }

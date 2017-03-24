@@ -626,6 +626,53 @@
                     }
                 }
             }
+        },
+        "/toBlock/create": {
+            "post": {
+                "description": "POST a bookId to Block Chain \n",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "formData",
+                        "description": "token",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "bookId",
+                        "in": "formData",
+                        "description": "该条目所属账本Id",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }
+                ],
+                "tags": [
+                    "BlockChain"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "create_blockchain_info",
+                            "type": "object",
+                            "properties": {
+                                "msg": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error response",
+                        "schema": {
+                            "title": "reg_Error_Info",
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     }
 }

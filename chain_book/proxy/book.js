@@ -1,6 +1,7 @@
 var models = require('../models');
 var Book = models.Book;
-var async = require('async')
+var Q = require('q');
+var async = require('async');
 
 /**
  * 新增一个账本的基本信息
@@ -65,6 +66,35 @@ exports.delBookById = function(id, callback) {
 exports.getBookById = function(id, callback) {
     Book.findOne({_id: id},callback)
 }
+
+/**
+ * 根据账本Id获得账本用于写入区块链
+ * Callback:
+ * - err, 数据库异常
+ * - Query, 结果对象
+ * @param {String} id 账本id
+ * @param {Function} callback 回调函数
+ */
+// exports.getallBookInfo = function(id) {
+//     var defer = Q.defer();
+//     Book.findOne({_id: id}).exec(
+//         function(err, bookInfo){
+//             if(!err && bookInfo) {
+//                 defer.resolve(bookInfo);
+//             } else {
+//                 defer.reject(err)
+//             }
+//         })
+//         return defer.promise;
+// }
+
+exports.getallBookInfo = function(id, callback) {
+    Book.findOne({_id: id}).exec(
+        function(err, bookInfo){
+            callback(err, bookInfo)
+        })
+}
+
 
 /**
  * 根据账本ObjectId, page, pageSize查找属于该用户的全部账本
