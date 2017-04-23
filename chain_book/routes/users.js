@@ -12,21 +12,21 @@ router.get('/Login*', function (req, res, next) {
 
   User.getUserById(loginId, function (err, user) {
     if (err) {
-      res.statusCode = 401;
       res.json({
-        msg: '后台错误'
+        error_code: 1001,
+        msg: '数据库操作错误'
       });
       return res;
     } else {
       if (!user) {
-      res.statusCode = 401;
       res.json({
+        error_code: 1002,
         msg: '用户不存在'
       });
       return res;
     } else if (user.passWord != passWord){
-      res.statusCode = 401;
       res.json({
+        error_code: 1003,
         msg: '用户名或密码错误'
       });
       return res;
@@ -37,6 +37,7 @@ router.get('/Login*', function (req, res, next) {
         exp: expires
       }, 'MY_SECRET_STRING')
       res.json({
+        error_code: 0,
         msg: '登录成功!',
         token: token
       })
@@ -53,27 +54,28 @@ router.post('/reg*', function (req, res, next) {
 
   User.getUserById(req.query.loginId, function (err, user) {
     if (err) {
-      res.statusCode = 401;
       res.json({
-        msg: '后台错误'
+        error_code: 1001,
+        msg: '数据库操作错误'
       });
       return res;
     } else if (user) {
-      res.statusCode = 401;
       res.json({
-        msg: '用户已存在，请重新注册'
+        error_code: 1004,
+        msg: '用户已存在'
       });
       return res;
     } else {
       User.newAndSave(newUser, function (err, user) {
         if (err) {
-          res.statusCode = 401;
           res.json({
-            msg: '后台错误'
+            error_code: 1001,
+            msg: '数据库操作错误'
           });
           return res;
         } else {
           res.json({
+            error_code: 0,
             msg: '注册成功！'
           });
         }
