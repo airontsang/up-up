@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var cors = require('cors')
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -23,6 +24,7 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
@@ -56,18 +58,18 @@ app.use(function (err, req, res, next) {
 });
 
 //allow custom header and CORS
-app.all('*', function (req, res, next) {
-  res.addHeader('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
-  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+// app.all('*', function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+//   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 
-  if (req.method == 'OPTIONS') {
-    res.send(200);
-    /让options请求快速返回/
-  } else {
-    next();
-  }
-});
+//   if (req.method == 'OPTIONS') {
+//     res.send(200);
+//     /让options请求快速返回/
+//   } else {
+//     next();
+//   }
+// });
 console.log("进来就执行");
 // getBlockToken.getBlockToken();
 var rule = new schedule.RecurrenceRule();
