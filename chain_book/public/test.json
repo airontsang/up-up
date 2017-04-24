@@ -1,678 +1,722 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "version": "1.0.0",
-        "title": "毕业设计-区块链账本 后台API"
-    },
-    "paths": {
-        "/User/Login": {
-            "get": {
-                "description": "Login \n",
-                "parameters": [
-                    {
-                        "name": "loginId",
-                        "in": "query",
-                        "description": "loginId",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "passWord",
-                        "in": "query",
-                        "description": "password",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    }
-                ],
-                "tags": [
-                    "User"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "title": "Login_Info",
-                            "type": "object",
-                            "properties": {
-                                "loginId": {
-                                    "type": "string"
-                                },
-                                "token": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Error response",
-                        "schema": {
-                            "title": "Login_Error_Info",
-                            "type": "string"
-                        }
-                    }
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "毕业设计-区块链账本 后台API"
+  },
+  "paths": {
+    "/User/Login": {
+      "get": {
+        "description": "Login \n",
+        "parameters": [
+          {
+            "name": "loginId",
+            "in": "query",
+            "description": "loginId",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "passWord",
+            "in": "query",
+            "description": "password",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Login_Info",
+              "type": "object",
+              "properties": {
+                "loginId": {
+                  "type": "string"
+                },
+                "token": {
+                  "type": "string"
                 }
+              }
             }
-        },
-        "/User/reg": {
-            "post": {
-                "description": "Posts a `User` object fro Signin\n",
-                "parameters": [
-                    {
-                        "name": "loginId",
-                        "in": "query",
-                        "description": "loginId",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "passWord",
-                        "in": "query",
-                        "description": "password",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    }
-                ],
-                "tags": [
-                    "User"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "title": "Signin_Info",
-                            "type": "object",
-                            "properties": {
-                                "msg": {
-                                    "type": "string"
-                                },
-                                "loginId": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Error response",
-                        "schema": {
-                            "title": "reg_Error_Info",
-                            "type": "string"
-                        }
-                    }
-                }
+          },
+          "401": {
+            "description": "Error response",
+            "schema": {
+              "title": "Login_Error_Info",
+              "type": "string"
             }
-        },
-        "/Books/addBook": {
-            "post": {
-                "description": "Posts a `Books` object for DB\n",
-                "parameters": [
-                    {
-                        "name": "access_token",
-                        "in": "query",
-                        "description": "token",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookTitle",
-                        "in": "query",
-                        "description": "bookTitle",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookIntro",
-                        "in": "query",
-                        "description": "bookIntro",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookPic",
-                        "in": "query",
-                        "description": "bookPic",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookPlace",
-                        "in": "query",
-                        "description": "bookPlace",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    }
-                ],
-                "tags": [
-                    "Books"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "title": "Books_Add_Info",
-                            "type": "object",
-                            "properties": {
-                                "msg": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Error response",
-                        "schema": {
-                            "title": "reg_Error_Info",
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/Books/getBooks": {
-            "get": {
-                "description": "Get `Books` object from DB by pageIndex and numOnePage \n",
-                "parameters": [
-                    {
-                        "name": "access_token",
-                        "in": "query",
-                        "description": "token",
-                        "required": false,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "pageIndex",
-                        "in": "query",
-                        "description": "页码",
-                        "required": true,
-                        "type": "number",
-                        "format": "number"
-                    },
-                    {
-                        "name": "pageSize",
-                        "in": "query",
-                        "description": "每页的数量",
-                        "required": true,
-                        "type": "number",
-                        "format": "number"
-                    }
-                ],
-                "tags": [
-                    "Books"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "title": "Books_Info",
-                            "type": "object",
-                            "properties": {
-                                "bookTitle": {
-                                    "type": "string"
-                                },
-                                "bookIntro": {
-                                    "type": "string"
-                                },
-                                "bookPlace": {
-                                    "type": "string"
-                                },
-                                "bookPic": {
-                                    "type": "string"
-                                },
-                                "isPublic": {
-                                    "type": "boolean"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Error response",
-                        "schema": {
-                            "title": "get_books_Error",
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/Books/editBookInfo": {
-            "put": {
-                "description": "Posts a modified `Books` object for editting in DB\n",
-                "parameters": [
-                    {
-                        "name": "access_token",
-                        "in": "query",
-                        "description": "token",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookId",
-                        "in": "query",
-                        "description": "ObjectId of book",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookTitle",
-                        "in": "query",
-                        "description": "bookTitle",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookIntro",
-                        "in": "query",
-                        "description": "bookIntro",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookPic",
-                        "in": "query",
-                        "description": "bookPic",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookPlace",
-                        "in": "query",
-                        "description": "bookPlace",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    }
-                ],
-                "tags": [
-                    "Books"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "title": "Books_Edit_Info",
-                            "type": "object",
-                            "properties": {
-                                "msg": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Error response",
-                        "schema": {
-                            "title": "reg_Error_Info",
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/Books/delBook": {
-            "delete": {
-                "description": "Del a book by ObjectId in MongoDB\n",
-                "parameters": [
-                    {
-                        "name": "access_token",
-                        "in": "query",
-                        "description": "token",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookId",
-                        "in": "query",
-                        "description": "ObjectId of book",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    }
-                ],
-                "tags": [
-                    "Books"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "title": "Books_Del_Info",
-                            "type": "object",
-                            "properties": {
-                                "msg": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Error response",
-                        "schema": {
-                            "title": "reg_Error_Info",
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/BookItem/addBookItem": {
-            "post": {
-                "description": "Posts a `BookItem` object for A Book in DB\n",
-                "parameters": [
-                    {
-                        "name": "access_token",
-                        "in": "query",
-                        "description": "token",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookId",
-                        "in": "query",
-                        "description": "bookId",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "content",
-                        "in": "query",
-                        "description": "content",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "charge",
-                        "in": "query",
-                        "description": "charge",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    }
-                ],
-                "tags": [
-                    "BookItem"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "title": "BookItem_Add_Info",
-                            "type": "object",
-                            "properties": {
-                                "msg": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Error response",
-                        "schema": {
-                            "title": "bookItemAdd_Error_Info",
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/BookItem/getBookItem": {
-            "get": {
-                "description": "Get `BookItem` object from DB by bookId, pageIndex and numOnePage \n",
-                "parameters": [
-                    {
-                        "name": "access_token",
-                        "in": "query",
-                        "description": "token",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookId",
-                        "in": "query",
-                        "description": "该账本下Id下所有的条目",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "pageIndex",
-                        "in": "query",
-                        "description": "页码",
-                        "required": true,
-                        "type": "number",
-                        "format": "number"
-                    },
-                    {
-                        "name": "pageSize",
-                        "in": "query",
-                        "description": "每页的数量",
-                        "required": true,
-                        "type": "number",
-                        "format": "number"
-                    }
-                ],
-                "tags": [
-                    "BookItem"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "title": "BookItem_Info",
-                            "type": "object",
-                            "properties": {
-                                "bookItemId": {
-                                    "type": "string"
-                                },
-                                "content": {
-                                    "type": "string"
-                                },
-                                "charge": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Error response",
-                        "schema": {
-                            "title": "get_books_Error",
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/BookItem/editBookItem": {
-            "put": {
-                "description": "Posts a modified `Books` object for DB\n",
-                "parameters": [
-                    {
-                        "name": "access_token",
-                        "in": "query",
-                        "description": "token",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookId",
-                        "in": "query",
-                        "description": "该条目所属账本Id",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookItemId",
-                        "in": "query",
-                        "description": "该条目Id",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "content",
-                        "in": "query",
-                        "description": "content",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "charge",
-                        "in": "query",
-                        "description": "charge",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    }
-                ],
-                "tags": [
-                    "BookItem"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "title": "BookItem_Edit_Info",
-                            "type": "object",
-                            "properties": {
-                                "msg": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Error response",
-                        "schema": {
-                            "title": "reg_Error_Info",
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/BookItem/delBookItem": {
-            "delete": {
-                "description": "Del a bookItem by it's ObjectId \n",
-                "parameters": [
-                    {
-                        "name": "access_token",
-                        "in": "query",
-                        "description": "token",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookId",
-                        "in": "query",
-                        "description": "该条目所属账本Id",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookItemId",
-                        "in": "query",
-                        "description": "该条目Id",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    }
-                ],
-                "tags": [
-                    "BookItem"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "title": "BookItem_Del_Info",
-                            "type": "object",
-                            "properties": {
-                                "msg": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Error response",
-                        "schema": {
-                            "title": "reg_Error_Info",
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/toBlock/create": {
-            "post": {
-                "description": "POST a bookId to Block Chain \n",
-                "parameters": [
-                    {
-                        "name": "access_token",
-                        "in": "formData",
-                        "description": "token",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    },
-                    {
-                        "name": "bookId",
-                        "in": "formData",
-                        "description": "该条目所属账本Id",
-                        "required": true,
-                        "type": "string",
-                        "format": "string"
-                    }
-                ],
-                "tags": [
-                    "BlockChain"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "schema": {
-                            "title": "create_blockchain_info",
-                            "type": "object",
-                            "properties": {
-                                "msg": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Error response",
-                        "schema": {
-                            "title": "reg_Error_Info",
-                            "type": "string"
-                        }
-                    }
-                }
-            }
+          }
         }
+      }
+    },
+    "/User/reg": {
+      "post": {
+        "description": "Posts a `User` object fro Signin\n",
+        "parameters": [
+          {
+            "name": "loginId",
+            "in": "query",
+            "description": "loginId",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "passWord",
+            "in": "query",
+            "description": "password",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Signin_Info",
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                },
+                "loginId": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error response",
+            "schema": {
+              "title": "reg_Error_Info",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/Books/addBook": {
+      "post": {
+        "description": "Posts a `Books` object for DB\n",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookTitle",
+            "in": "query",
+            "description": "bookTitle",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookIntro",
+            "in": "query",
+            "description": "bookIntro",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookPic",
+            "in": "query",
+            "description": "bookPic",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookPlace",
+            "in": "query",
+            "description": "bookPlace",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "tags": [
+          "Books"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Books_Add_Info",
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error response",
+            "schema": {
+              "title": "reg_Error_Info",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/Books/getBooks": {
+      "get": {
+        "description": "Get `Books` object from DB by pageIndex and numOnePage \n",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "token",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "pageIndex",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "number",
+            "format": "number"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页的数量",
+            "required": true,
+            "type": "number",
+            "format": "number"
+          }
+        ],
+        "tags": [
+          "Books"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Books_Info",
+              "type": "object",
+              "properties": {
+                "bookTitle": {
+                  "type": "string"
+                },
+                "bookIntro": {
+                  "type": "string"
+                },
+                "bookPlace": {
+                  "type": "string"
+                },
+                "bookPic": {
+                  "type": "string"
+                },
+                "isPublic": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error response",
+            "schema": {
+              "title": "get_books_Error",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/Books/getIndexBook": {
+      "get": {
+        "description": "Get `Books` object from DB by pageIndex and numOnePage \n",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "token",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "tags": [
+          "Books"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Books_Info",
+              "type": "object",
+              "properties": {
+                "bookTitle": {
+                  "type": "string"
+                },
+                "bookIntro": {
+                  "type": "string"
+                },
+                "bookPlace": {
+                  "type": "string"
+                },
+                "bookPic": {
+                  "type": "string"
+                },
+                "isPublic": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Books/editBookInfo": {
+      "put": {
+        "description": "Posts a modified `Books` object for editting in DB\n",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "ObjectId of book",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookTitle",
+            "in": "query",
+            "description": "bookTitle",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookIntro",
+            "in": "query",
+            "description": "bookIntro",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookPic",
+            "in": "query",
+            "description": "bookPic",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookPlace",
+            "in": "query",
+            "description": "bookPlace",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "tags": [
+          "Books"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Books_Edit_Info",
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error response",
+            "schema": {
+              "title": "reg_Error_Info",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/Books/delBook": {
+      "delete": {
+        "description": "Del a book by ObjectId in MongoDB\n",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "ObjectId of book",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "tags": [
+          "Books"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Books_Del_Info",
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error response",
+            "schema": {
+              "title": "reg_Error_Info",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/BookItem/addBookItem": {
+      "post": {
+        "description": "Posts a `BookItem` object for A Book in DB\n",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "bookId",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "content",
+            "in": "query",
+            "description": "content",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "charge",
+            "in": "query",
+            "description": "charge",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "tags": [
+          "BookItem"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "BookItem_Add_Info",
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error response",
+            "schema": {
+              "title": "bookItemAdd_Error_Info",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/BookItem/getBookItem": {
+      "get": {
+        "description": "Get `BookItem` object from DB by bookId, pageIndex and numOnePage \n",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "该账本下Id下所有的条目",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "pageIndex",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "type": "number",
+            "format": "number"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页的数量",
+            "required": true,
+            "type": "number",
+            "format": "number"
+          }
+        ],
+        "tags": [
+          "BookItem"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "BookItem_Info",
+              "type": "object",
+              "properties": {
+                "bookItemId": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "charge": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error response",
+            "schema": {
+              "title": "get_books_Error",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/BookItem/editBookItem": {
+      "put": {
+        "description": "Posts a modified `Books` object for DB\n",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "该条目所属账本Id",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookItemId",
+            "in": "query",
+            "description": "该条目Id",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "content",
+            "in": "query",
+            "description": "content",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "charge",
+            "in": "query",
+            "description": "charge",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "tags": [
+          "BookItem"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "BookItem_Edit_Info",
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error response",
+            "schema": {
+              "title": "reg_Error_Info",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/BookItem/delBookItem": {
+      "delete": {
+        "description": "Del a bookItem by it's ObjectId \n",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "该条目所属账本Id",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookItemId",
+            "in": "query",
+            "description": "该条目Id",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "tags": [
+          "BookItem"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "BookItem_Del_Info",
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error response",
+            "schema": {
+              "title": "reg_Error_Info",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/toBlock/create": {
+      "post": {
+        "description": "POST a bookId to Block Chain \n",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "formData",
+            "description": "token",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookId",
+            "in": "formData",
+            "description": "该条目所属账本Id",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "tags": [
+          "BlockChain"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "create_blockchain_info",
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error response",
+            "schema": {
+              "title": "reg_Error_Info",
+              "type": "string"
+            }
+          }
+        }
+      }
     }
+  }
 }
