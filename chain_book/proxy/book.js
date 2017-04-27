@@ -17,9 +17,9 @@ exports.newAndSave = function (bookF, callback) {
     book.founderId = bookF.founderId;
     book.title = bookF.title;
     book.place = bookF.place;
+    book.partyTime = bookF.partyTime;
     book.intro = bookF.intro;
     book.picUrl = bookF.picUrl;
-
     book.save(callback)
 }
 
@@ -37,6 +37,7 @@ exports.editBookById = function(id, newBook, callback) {
     book.title = newBook.title;
     book.place = newBook.place;
     book.intro = newBook.intro;
+    book.partyTime = newBook.partyTime;
     book.picUrl = newBook.picUrl;
     book.update_at = new Date();
 
@@ -68,25 +69,23 @@ exports.getBookById = function(id, callback) {
 }
 
 /**
- * 根据账本Id获得账本用于写入区块链
+ * 根据账本Id写入总收入，总支出，余额
  * Callback:
  * - err, 数据库异常
  * - Query, 结果对象
  * @param {String} id 账本id
  * @param {Function} callback 回调函数
  */
-// exports.getallBookInfo = function(id) {
-//     var defer = Q.defer();
-//     Book.findOne({_id: id}).exec(
-//         function(err, bookInfo){
-//             if(!err && bookInfo) {
-//                 defer.resolve(bookInfo);
-//             } else {
-//                 defer.reject(err)
-//             }
-//         })
-//         return defer.promise;
-// }
+exports.writeMoney = function(id, money, cb) {
+    var sheet = {}
+    sheet.sum       = money.sum
+    sheet.balance   = money.balance
+    sheet.spend     = money.spend
+    Book.update({_id: id}, {$set: {sum:money.sum,balance:money.balance,spend:money.spend}}).exec(
+        function(err, result){
+            cb(err, result)
+        })
+}
 
 exports.getallBookInfo = function(id, callback) {
     Book.findOne({_id: id}).exec(
@@ -108,7 +107,7 @@ exports.getallBookInfo = function(id, callback) {
  */
 exports.queryBookByFounder = function(founderId, page, pageSize, callback) {
     var start = (page - 1) * pageSize;
-    var opt = { "_id": 1, "picUrl": 1, "intro": 1, "place": 1, "title": 1, "create_at": 1, "isPublic": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明
+    var opt = { "_id": 1, "picUrl": 1, "intro": 1, "place": 1, "title": 1, "partyTime":1 ,"create_at": 1, "isPublic": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明
     var $page = {
         pageNumber: page
     };
@@ -128,7 +127,7 @@ exports.queryBookByFounder = function(founderId, page, pageSize, callback) {
  * @param {Function} callback 回调函数
  */
 exports.queryLatestBook = function(founderId, callback) {
-    var opt = { "_id": 1, "picUrl": 1, "intro": 1, "place": 1, "title": 1, "create_at": 1, "isPublic": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明
+    var opt = { "_id": 1, "picUrl": 1, "intro": 1, "place": 1, "title": 1, "partyTime":1 , "create_at": 1, "isPublic": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明
     Book.find({ founderId: founderId }, opt).sort({update_at: 'desc'}).exec(
         function (err, doc) {
             console.log(doc)
@@ -153,4 +152,6 @@ exports.addEvidenceId = function(Id, evidenceId, callback) {
             callback(err, doc)
         }
     )
+
+    
 }

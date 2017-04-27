@@ -44,10 +44,11 @@ router.post('/bookPic/uploading', function (req, res, next) {
 router.post('/addBook*', jwtauth.authIsUser, function (req, res, next) {
     var newBook = {};
     newBook.founderId = res.locals.user._id;
-    newBook.title = req.query.bookTitle;
-    newBook.place = req.query.bookPlace;
-    newBook.intro = req.query.bookIntro;
-    newBook.picUrl = req.query.bookPic;
+    newBook.title = req.body.bookTitle;
+    newBook.place = req.body.bookPlace;
+    newBook.intro = req.body.bookIntro;
+    newBook.partyTime = req.body.partyTime;
+    newBook.picUrl = req.body.bookPic;
 
     Book.newAndSave(newBook, function (err, book) {
         if (err) {
@@ -138,10 +139,11 @@ router.put('/editBookInfo*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], func
     // var modifiedBook = new BookModel();
     var modifiedBook = {};
     modifiedBook.founderId = res.locals.user._id;
-    modifiedBook.title = req.query.bookTitle;
-    modifiedBook.place = req.query.bookPlace;
-    modifiedBook.intro = req.query.bookIntro;
-    modifiedBook.picUrl = req.query.bookPic;
+    modifiedBook.title = req.body.bookTitle;
+    modifiedBook.place = req.body.bookPlace;
+    modifiedBook.intro = req.body.bookIntro;
+    modifiedBook.partyTime = req.body.partyTime;
+    modifiedBook.picUrl = req.body.bookPic;
 
     Book.editBookById(req.query.bookId, modifiedBook, function (err, query) {
         if (err) {

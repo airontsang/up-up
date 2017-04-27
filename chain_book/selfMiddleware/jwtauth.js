@@ -50,7 +50,8 @@ var authIsUser = function (req, res, next) {
 }
 
 var authIsBookOwner = function (req, res, next) {
-    Book.getBookById(req.query.bookId, function (err, book) {
+    var bookId = (req.body.bookId) || (req.query.bookId);
+    Book.getBookById(bookId, function (err, book) {
         if (err) {
             res.json({
                 error_code: 1001,

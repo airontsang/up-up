@@ -6,6 +6,8 @@ var BookItemSchema = new Schema({
     bookId: { type: ObjectId },
     content: { type: String },
     charge: { type: String },
+    type: { type: Boolean },
+    tag: { type: String },
     create_at: { type: Date, default: Date.now },
     update_at: { type: Date, default: Date.now },
 })

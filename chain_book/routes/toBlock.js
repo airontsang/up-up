@@ -65,7 +65,7 @@ router.post('/create', blockChain.BlockTokenMW, function (req, res, next) {
     })
 })
 
-router.get('/refresh', [jwtauth.authIsUser, jwtauth.authIsBookOwner, jwtauth.authIsBookItem], function (req, res) {
+router.get('/refresh', [jwtauth.authIsUser, jwtauth.authIsBookOwner], function (req, res) {
     if (typeof global.blockToken === "undefined") {
         blockChain.getBlockToken();
     } else {

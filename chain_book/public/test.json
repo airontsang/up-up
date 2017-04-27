@@ -57,11 +57,14 @@
     },
     "/User/reg": {
       "post": {
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
         "description": "Posts a `User` object fro Signin\n",
         "parameters": [
           {
             "name": "loginId",
-            "in": "query",
+            "in": "formData",
             "description": "loginId",
             "required": true,
             "type": "string",
@@ -69,7 +72,7 @@
           },
           {
             "name": "passWord",
-            "in": "query",
+            "in": "formData",
             "description": "password",
             "required": true,
             "type": "string",
@@ -107,6 +110,9 @@
     },
     "/Books/addBook": {
       "post": {
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
         "description": "Posts a `Books` object for DB\n",
         "parameters": [
           {
@@ -119,7 +125,7 @@
           },
           {
             "name": "bookTitle",
-            "in": "query",
+            "in": "formData",
             "description": "bookTitle",
             "required": true,
             "type": "string",
@@ -127,7 +133,7 @@
           },
           {
             "name": "bookIntro",
-            "in": "query",
+            "in": "formData",
             "description": "bookIntro",
             "required": true,
             "type": "string",
@@ -135,7 +141,7 @@
           },
           {
             "name": "bookPic",
-            "in": "query",
+            "in": "formData",
             "description": "bookPic",
             "required": true,
             "type": "string",
@@ -143,11 +149,19 @@
           },
           {
             "name": "bookPlace",
-            "in": "query",
+            "in": "formData",
             "description": "bookPlace",
             "required": true,
             "type": "string",
             "format": "string"
+          },
+          {
+            "name": "partyTime",
+            "in": "formData",
+            "description": "partyTime",
+            "required": true,
+            "type": "string",
+            "format": "date"
           }
         ],
         "tags": [
@@ -229,6 +243,9 @@
                 },
                 "isPublic": {
                   "type": "boolean"
+                },
+                "partyTime": {
+                  "type": "string"
                 }
               }
             }
@@ -280,6 +297,9 @@
                 },
                 "isPublic": {
                   "type": "boolean"
+                },
+                "partyTime": {
+                  "type": "string"
                 }
               }
             }
@@ -289,6 +309,9 @@
     },
     "/Books/editBookInfo": {
       "put": {
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
         "description": "Posts a modified `Books` object for editting in DB\n",
         "parameters": [
           {
@@ -301,7 +324,7 @@
           },
           {
             "name": "bookId",
-            "in": "query",
+            "in": "formData",
             "description": "ObjectId of book",
             "required": true,
             "type": "string",
@@ -309,7 +332,7 @@
           },
           {
             "name": "bookTitle",
-            "in": "query",
+            "in": "formData",
             "description": "bookTitle",
             "required": true,
             "type": "string",
@@ -317,7 +340,7 @@
           },
           {
             "name": "bookIntro",
-            "in": "query",
+            "in": "formData",
             "description": "bookIntro",
             "required": true,
             "type": "string",
@@ -325,7 +348,7 @@
           },
           {
             "name": "bookPic",
-            "in": "query",
+            "in": "formData",
             "description": "bookPic",
             "required": true,
             "type": "string",
@@ -333,11 +356,19 @@
           },
           {
             "name": "bookPlace",
-            "in": "query",
+            "in": "formData",
             "description": "bookPlace",
             "required": true,
             "type": "string",
             "format": "string"
+          },
+          {
+            "name": "partyTime",
+            "in": "formData",
+            "description": "partyTime",
+            "required": true,
+            "type": "string",
+            "format": "date"
           }
         ],
         "tags": [
@@ -415,11 +446,14 @@
     },
     "/BookItem/addBookItem": {
       "post": {
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
         "description": "Posts a `BookItem` object for A Book in DB\n",
         "parameters": [
           {
             "name": "access_token",
-            "in": "query",
+            "in": "formData",
             "description": "token",
             "required": true,
             "type": "string",
@@ -427,7 +461,7 @@
           },
           {
             "name": "bookId",
-            "in": "query",
+            "in": "formData",
             "description": "bookId",
             "required": true,
             "type": "string",
@@ -435,7 +469,7 @@
           },
           {
             "name": "content",
-            "in": "query",
+            "in": "formData",
             "description": "content",
             "required": true,
             "type": "string",
@@ -443,8 +477,24 @@
           },
           {
             "name": "charge",
-            "in": "query",
+            "in": "formData",
             "description": "charge",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "type",
+            "in": "formData",
+            "description": "type",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "tag",
+            "in": "formData",
+            "description": "tag",
             "required": true,
             "type": "string",
             "format": "string"
@@ -547,6 +597,9 @@
     },
     "/BookItem/editBookItem": {
       "put": {
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
         "description": "Posts a modified `Books` object for DB\n",
         "parameters": [
           {
@@ -559,7 +612,7 @@
           },
           {
             "name": "bookId",
-            "in": "query",
+            "in": "formData",
             "description": "该条目所属账本Id",
             "required": true,
             "type": "string",
@@ -567,7 +620,7 @@
           },
           {
             "name": "bookItemId",
-            "in": "query",
+            "in": "formData",
             "description": "该条目Id",
             "required": true,
             "type": "string",
@@ -575,7 +628,7 @@
           },
           {
             "name": "content",
-            "in": "query",
+            "in": "formData",
             "description": "content",
             "required": true,
             "type": "string",
@@ -583,8 +636,24 @@
           },
           {
             "name": "charge",
-            "in": "query",
+            "in": "formData",
             "description": "charge",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "type",
+            "in": "formData",
+            "description": "type",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "tag",
+            "in": "formData",
+            "description": "tag",
             "required": true,
             "type": "string",
             "format": "string"
@@ -673,6 +742,9 @@
     },
     "/toBlock/create": {
       "post": {
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
         "description": "POST a bookId to Block Chain \n",
         "parameters": [
           {
