@@ -24,6 +24,23 @@ exports.newAndSave = function (bookItemF, callback) {
 }
 
 /**
+ * 操作前用，返回操作前的账本细则
+ * Callback:
+ * - err, 数据库异常
+ * - bookItem, 账本细则对象
+ * @param {Object} bookItemF 进来的账本细则对象
+ * @param {Function} callback 回调函数
+ */
+
+exports.getItem = function (itemId, callback) {
+    bookItem.findOne({_id: itemId}).exec(
+        function(err, doc) {
+            callback(err, doc)
+        }
+    )
+}
+
+/**
  * 根据账本细则Id修改账本基本信息
  * Callback:
  * - err, 数据库异常
@@ -97,18 +114,6 @@ exports.querySomeBookItemByBook = function(bookId, page, pageSize, callback) {
  * @param {ObjectId} bookId 某账本id 
  * @param {Function} callback 回调函数
  */
-// exports.getAllBookItemByBookId = function(bookId) {
-//     var defer = Q.defer();  
-//     BookItem.find({ bookId: bookId }).sort({update_at: 'desc'}).exec(
-//         function (err, doc) {
-//             if(!err && doc) {
-//                 defer.resolve(doc);
-//             } else {
-//                 defer.reject(err)
-//             }
-//         })
-//         return defer.promise;
-// }
 exports.getAllBookItemByBookId = function(bookId, callback) {
     BookItem.find({ bookId: bookId }).sort({update_at: 'desc'}).exec(
         function (err, doc) {

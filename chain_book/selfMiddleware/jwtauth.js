@@ -11,7 +11,11 @@ var authIsUser = function (req, res, next) {
             var decoded = jwt.decode(token, 'MY_SECRET_STRING');
             // handle token here
             if (decoded.exp <= Date.now()) {
-                res.end('Access token has expired', 400);
+                res.json({
+                        error_code: 1006,
+                        msg: '登录过期'
+                    });
+                    return res
             }
             User.getUserById(decoded.iss, function (err, user) {
                 if (err) {
@@ -69,6 +73,12 @@ var authIsBookOwner = function (req, res, next) {
                 res.json({
                     error_code: 1016,
                     msg: '无权限操作该账本'
+                });
+                return res
+            } else if (book.isPlulic){
+                res.json({
+                    error_code: 1017,
+                    msg: '账本已发布，无法修改'
                 });
                 return res
             } else {
