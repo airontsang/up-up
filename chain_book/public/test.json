@@ -498,6 +498,14 @@
             "required": true,
             "type": "string",
             "format": "string"
+          },
+          {
+            "name": "happen_at",
+            "in": "formData",
+            "description": "happen_time",
+            "required": true,
+            "type": "string",
+            "format": "date"
           }
         ],
         "tags": [
@@ -657,6 +665,14 @@
             "required": true,
             "type": "string",
             "format": "string"
+          },
+          {
+            "name": "happen_at",
+            "in": "formData",
+            "description": "happen_time",
+            "required": true,
+            "type": "string",
+            "format": "date"
           }
         ],
         "tags": [

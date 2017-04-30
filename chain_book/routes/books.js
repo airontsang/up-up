@@ -1,4 +1,5 @@
 var express = require('express');
+var moment = require('moment');
 var router = express.Router();
 var Book = require('../proxy/book');
 var async = require('async');
@@ -47,7 +48,7 @@ router.post('/addBook*', jwtauth.authIsUser, function (req, res, next) {
     newBook.title = req.body.bookTitle;
     newBook.place = req.body.bookPlace;
     newBook.intro = req.body.bookIntro;
-    newBook.partyTime = req.body.partyTime;
+    newBook.partyTime = moment(req.body.partyTime).format();
     newBook.picUrl = req.body.bookPic;
 
     Book.newAndSave(newBook, function (err, book) {
@@ -142,7 +143,7 @@ router.put('/editBookInfo*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], func
     modifiedBook.title = req.body.bookTitle;
     modifiedBook.place = req.body.bookPlace;
     modifiedBook.intro = req.body.bookIntro;
-    modifiedBook.partyTime = req.body.partyTime;
+    modifiedBook.partyTime = moment(req.body.partyTime).format();
     modifiedBook.picUrl = req.body.bookPic;
 
     Book.editBookById(req.query.bookId, modifiedBook, function (err, query) {

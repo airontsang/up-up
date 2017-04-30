@@ -19,6 +19,7 @@ exports.newAndSave = function (bookItemF, callback) {
     bookItem.charge = bookItemF.charge;
     bookItem.type = bookItemF.type;
     bookItem.tag = bookItemF.tag;
+    bookItem.happen_at = bookItemF.happen_at;
     
     bookItem.save(callback)
 }
@@ -54,10 +55,16 @@ exports.editBookItemBybookId = function(id, newBookItem, callback) {
     bookItem.content = newBookItem.content;
     bookItem.charge = newBookItem.charge;
     bookItem.type = newBookItem.type;
-    bookItem.tag = newBookItem.tag;    
+    bookItem.tag = newBookItem.tag;
+    bookItem.happen_at = newBookItem.happen_at;    
     bookItem.update_at = new Date();
 
-    BookItem.findOneAndUpdate({_id: id},bookItem,callback)
+    // BookItem.findOneAndUpdate({_id: id},bookItem,callback)
+
+    BookItem.update({_id: id}, {$set: bookItem }).exec(
+        function(err, result){
+            cb(err, result)
+        })
 }
 
 /**
@@ -81,7 +88,7 @@ exports.delBookItemBybookId = function(id, callback) {
  * @param {Function} callback 回调函数
  */
 exports.delAllBookItem = function(bookId, callback) {
-    BookItem.Remove({bookId: bookId},callback)
+    BookItem.remove({bookId: bookId},callback)
 }
 
 /**
@@ -109,7 +116,7 @@ exports.allBookItemById = function(bookId, callback) {
  */
 exports.querySomeBookItemByBook = function(bookId, page, pageSize, callback) {
     var start = (page - 1) * pageSize;
-    var opt = { "_id": 1, "charge": 1, "content": 1, "type":1, "tag":1, "update_at": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明
+    var opt = { "_id": 1, "charge": 1, "content": 1, "type":1, "tag":1, "happen_at": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明
     
     BookItem.find({ bookId: bookId }, opt).skip(start).limit(Number(pageSize)).sort({update_at: 'desc'}).exec(
         function (err, doc) {

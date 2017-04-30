@@ -41,7 +41,11 @@ exports.editBookById = function(id, newBook, callback) {
     book.picUrl = newBook.picUrl;
     book.update_at = new Date();
 
-    Book.findOneAndUpdate({_id: id},book,callback)
+    // Book.findOneAndUpdate({_id: id},book,callback)
+    Book.update({_id: id}, {$set: book}).exec(
+        function(err, result){
+            cb(err, result)
+        })
 }
 
 /**

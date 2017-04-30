@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var BookItem = require('../proxy/bookItem');
 var Book = require('../proxy/book');
+var moment = require('moment');
 var async = require('async');
 var jwtauth = require('../selfMiddleware/jwtauth');
 
@@ -12,6 +13,10 @@ router.post('/addBookItem*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], func
     newBookItem.charge = req.body.charge;
     newBookItem.type = req.body.type;
     newBookItem.tag = req.body.tag;
+    newBookItem.happen_at = moment(req.body.happen_at).format();
+
+    var test = moment(newBookItem.happen_at).format("YYY-MM-DD HH:mm");
+    console.log(test);
 
     function saveBookItem(cb) {
         BookItem.newAndSave(newBookItem, function (err, doc) {
@@ -95,6 +100,7 @@ router.put('/editBookItem*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], func
     modifiedBookItem.charge = req.body.charge;
     modifiedBookItem.type = req.body.type;
     modifiedBookItem.tag = req.body.tag;
+    modifiedBookItem.happen_at = moment(req.body.happen_at).format();
 
     // BookItem.editBookItemBybookId(req.query.bookItemId, modifiedBookItem, function (err, query) {
     //     if (err) {
