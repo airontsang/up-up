@@ -73,6 +73,18 @@ exports.delBookItemBybookId = function(id, callback) {
 }
 
 /**
+ * 根据账本Id删除关于该账本的全部账目
+ * Callback:
+ * - err, 数据库异常
+ * - Query, 结果对象
+ * @param {String} bookId 账本id
+ * @param {Function} callback 回调函数
+ */
+exports.delAllBookItem = function(bookId, callback) {
+    BookItem.Remove({bookId: bookId},callback)
+}
+
+/**
  * 根据账本细则Id获得全部账本细则，便于计算
  * Callback:
  * - err, 数据库异常

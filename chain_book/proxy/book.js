@@ -107,7 +107,7 @@ exports.getallBookInfo = function(id, callback) {
  */
 exports.queryBookByFounder = function(founderId, page, pageSize, callback) {
     var start = (page - 1) * pageSize;
-    var opt = { "_id": 1, "picUrl": 1, "intro": 1, "place": 1, "title": 1, "partyTime":1 ,"create_at": 1, "isPublic": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明
+    var opt = { "_id": 1, "picUrl": 1, "intro": 1, "place": 1, "title": 1, "partyTime":1 , "create_at": 1, "isPublic": 1, "sum": 1, "spend": 1, "balance": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明    
     var $page = {
         pageNumber: page
     };
@@ -127,7 +127,7 @@ exports.queryBookByFounder = function(founderId, page, pageSize, callback) {
  * @param {Function} callback 回调函数
  */
 exports.queryLatestBook = function(founderId, callback) {
-    var opt = { "_id": 1, "picUrl": 1, "intro": 1, "place": 1, "title": 1, "partyTime":1 , "create_at": 1, "isPublic": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明
+    var opt = { "_id": 1, "picUrl": 1, "intro": 1, "place": 1, "title": 1, "partyTime":1 , "create_at": 1, "isPublic": 1, "sum": 1, "spend": 1, "balance": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明
     Book.find({ founderId: founderId }, opt).sort({update_at: 'desc'}).exec(
         function (err, doc) {
             console.log(doc)

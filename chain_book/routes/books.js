@@ -162,18 +162,55 @@ router.put('/editBookInfo*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], func
 });
 
 router.delete('/delBook', [jwtauth.authIsUser, jwtauth.authIsBookOwner], function (req, res, next) {
-    Book.delBookById(req.query.bookId, function (err, query) {
-        if (err) {
+    // Book.delBookById(req.query.bookId, function (err, query) {
+    //     if (err) {
+    //         res.json({
+    //             error_code: 1001,
+    //             msg: '数据库操作错误'
+    //         });
+    //         return res;
+    //     } else {
+    //         res.json({
+    //             error_code: 0,
+    //             msg: '删除成功'
+    //         });
+    //     }
+    // })
+
+    function delBook(callback) {
+        Book.delBookById(req.query.bookId, function (err, result) {
+            if (err) {
+                callback(err, null)
+            } else {
+                callback(null, result);
+            }
+        })
+    }
+
+    function delBookItem(arg1, callback) {
+        BookItem.delAllBookItem(req.query.bookId, function (err, result) {
+            if (err) {
+                callback(err, null)
+            } else {
+                callback(null, result)
+            }
+        })
+    }
+
+    async.waterfall([
+        delBook,
+        delBookItem,
+    ], function (err, result) {
+        if (!err) {
+            res.json({
+                error_code: 0,
+                data: result
+            })
+        } else {
             res.json({
                 error_code: 1001,
                 msg: '数据库操作错误'
-            });
-            return res;
-        } else {
-            res.json({
-                error_code: 0,
-                msg: '删除成功'
-            });
+            })
         }
     })
 })

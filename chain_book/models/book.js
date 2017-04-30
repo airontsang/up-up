@@ -11,7 +11,7 @@ var BookSchema = new Schema({
     partyTime: { type: Date },
     create_at: { type: Date, default: Date.now },
     update_at: { type: Date, default: Date.now },
-    isPublic: { type: Boolean },
+    isPublic: { type: Boolean, default: false },
     sum: { type: Number, default: 0 },
     balance: { type: Number, default: 0 },
     spend: { type: Number, default: 0 },
