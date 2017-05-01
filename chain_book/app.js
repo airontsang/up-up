@@ -71,7 +71,7 @@ app.use(function (err, req, res, next) {
 //   }
 // });
 console.log("进来就执行");
-// getBlockToken.getBlockToken();
+getBlockToken.getBlockToken();
 var rule = new schedule.RecurrenceRule();
 
 rule.minute = 1;

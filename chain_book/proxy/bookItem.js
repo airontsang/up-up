@@ -63,7 +63,7 @@ exports.editBookItemBybookId = function(id, newBookItem, callback) {
 
     BookItem.update({_id: id}, {$set: bookItem }).exec(
         function(err, result){
-            cb(err, result)
+            callback(err, result)
         })
 }
 

@@ -15,9 +15,6 @@ router.post('/addBookItem*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], func
     newBookItem.tag = req.body.tag;
     newBookItem.happen_at = moment(req.body.happen_at).format();
 
-    var test = moment(newBookItem.happen_at).format("YYY-MM-DD HH:mm");
-    console.log(test);
-
     function saveBookItem(cb) {
         BookItem.newAndSave(newBookItem, function (err, doc) {
             if (err) {
@@ -87,7 +84,7 @@ router.get('/getBookItem*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], funct
         } else {
             res.json({
                 error_code: 0,
-                bookItemList: bookItemList
+                data: bookItemList
             });
         }
     })
