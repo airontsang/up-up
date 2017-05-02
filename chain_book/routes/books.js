@@ -146,7 +146,7 @@ router.put('/editBookInfo*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], func
     modifiedBook.partyTime = moment(req.body.partyTime).format();
     modifiedBook.picUrl = req.body.bookPic;
 
-    Book.editBookById(req.query.bookId, modifiedBook, function (err, query) {
+    Book.editBookById(req.body.bookId, modifiedBook, function (err, query) {
         if (err) {
             res.json({
                 error_code: 1001,
@@ -156,10 +156,11 @@ router.put('/editBookInfo*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], func
         } else {
             res.json({
                 error_code: 0,
-                msg: '修改成功'
+                msg: query
             })
         }
     })
+
 });
 
 router.delete('/delBook', [jwtauth.authIsUser, jwtauth.authIsBookOwner], function (req, res, next) {

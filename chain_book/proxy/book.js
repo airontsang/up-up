@@ -41,10 +41,11 @@ exports.editBookById = function(id, newBook, callback) {
     book.picUrl = newBook.picUrl;
     book.update_at = new Date();
 
+    // ,place: newBook.place, update_at: new Date()
     // Book.findOneAndUpdate({_id: id},book,callback)
-    Book.update({_id: id}, {$set: book}).exec(
+    Book.update({_id: id}, {$set: book }).exec(
         function(err, result){
-            cb(err, result)
+            callback(err, result)
         })
 }
 
@@ -85,14 +86,15 @@ exports.writeMoney = function(id, money, cb) {
     sheet.sum       = money.sum
     sheet.balance   = money.balance
     sheet.spend     = money.spend
-    Book.update({_id: id}, {$set: {sum:money.sum,balance:money.balance,spend:money.spend}}).exec(
+    Book.update({_id: id}, {$set: {sum:money.sum,balance:money.balance,spend:money.spend, update_at: new Date()}}).exec(
         function(err, result){
             cb(err, result)
         })
 }
 
 exports.getallBookInfo = function(id, callback) {
-    Book.findOne({_id: id}).exec(
+    var opt = { "_id": 1, "title": 1, "place": 1, "intro": 1, "picUrl": 1, "partyTime":1 , "create_at": 1, "sum": 1, "spend": 1, "balance": 1 }     
+    Book.findOne({_id: id}, opt).exec(
         function(err, bookInfo){
             callback(err, bookInfo)
         })
@@ -141,7 +143,7 @@ exports.queryLatestBook = function(founderId, callback) {
 }
 
 /**
- * 根据账本ObjectId,添加账本evidenceId内容
+ * 根据账本ObjectId,添加账本evidenceObj三项内容
  * Callback:
  * - err, 数据库异常
  * - Query, 结果对象
@@ -150,8 +152,9 @@ exports.queryLatestBook = function(founderId, callback) {
  * @param {String} pageSize 每页大小  
  * @param {Function} callback 回调函数
  */
-exports.addEvidenceId = function(Id, evidenceId, callback) {
-    Book.update({ _id: Id }, {$set: { evidenceId: evidenceId }}).exec(
+exports.addEvidenceObj = function(Id, evidenceObj, callback) {
+
+    Book.update({ _id: Id }, {$set: { dbHash: evidenceObj.dbHash, bcHash: evidenceObj.bc_hash, evidenceId:evidenceObj.evidence_id, isPublic:true }}).exec(
         function (err, doc) {
             callback(err, doc)
         }

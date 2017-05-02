@@ -15,6 +15,8 @@ var BookSchema = new Schema({
     sum: { type: Number, default: 0 },
     balance: { type: Number, default: 0 },
     spend: { type: Number, default: 0 },
+    dbHash: { type: String, default: ""},
+    bcHash: { type: String, default: ""},    
     evidenceId: { type: String, default: "" }
 })
 BookSchema.pre('save', function(next){
