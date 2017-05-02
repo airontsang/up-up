@@ -72,7 +72,7 @@ router.post('/create', function (req, res) {
     if (typeof global.blockToken === "undefined") {
         blockChain.getBlockToken();
     } else {
-        blockChain.registerBlock().then(function (result) {
+        blockChain.testBlock().then(function (result) {
             res.json({
                 data: result
             })

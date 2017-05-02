@@ -64,20 +64,16 @@ var BlockTokenMW = function (req, res, next) {
 var createBlock = function (dataHash) {
     console.log("拿到了token " + global.blockToken);
     var formData = {
-        // access_token: global.blockToken,
         trade_no: '1000009820181283525798',
         signers: [{
-            "bubi_address": "bubiV8hzUjae4kvhKdmrX8zNzNxVDogprpuw1Jmh",
-            "password": "132456",
+            bubi_address: "bubiV8hzUjae4kvhKdmrX8zNzNxVDogprpuw1Jmh",
+            password: "132456",
         }],
         metadata: dataHash
     }
     var opt = {
         url: "https://api.bubidev.cn/evidence/v2/create?access_token=" + global.blockToken,
         method: "POST",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
         form: formData
     };
     var defer = Q.defer();
@@ -105,22 +101,25 @@ var createBlock = function (dataHash) {
 
 
 var testBlock = function () {
+    console.log("这");
     console.log("拿到了token " + global.blockToken);
-    // var formData = {
-    //     // access_token: global.blockToken,
-    //     "trade_no": '1000009820181283525798',
-    //     "signers": [{
-    //         "bubi_address": "bubiV8hzUjae4kvhKdmrX8zNzNxVDogprpuw1Jmh",
-    //         "password": "132456",
-    //     }],
-    //     "metadata": dataHash
-    // }
+    var formData = {
+        "metadata": "895654",
+        "signers": [
+            {
+                "bubi_address": "bubiV8hzUjae4kvhKdmrX8zNzNxVDogprpuw1Jmh",
+                "password": "123456"
+            }
+        ],
+        "trade_no": "8546542we"
+    }
     var opt = {
-        url: "https://api.bubidev.cn/evidence/v1/history?bubi_address=bubiV8hzUjae4kvhKdmrX8zNzNxVDogprpuw1Jmh&access_token=" + global.blockToken,
-        method: "GET",
+        url: "https://api.bubidev.cn/evidence/v2/create?access_token=" + global.blockToken,
+        method: "POST",
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'text/html;charset=UTF8',
         },
+        form: formData,
     };
     var defer = Q.defer();
     var reg_back = request(opt, function (error, response, body) {
@@ -146,16 +145,16 @@ var registerBlock = function () {
     console.log("拿到了token " + global.blockToken);
     console.log("uuid" + uuid.v1())
     var formData = {
-        "user_name": "tsangzeng85",
-        "password": "qew898",
-        "trade_no": "26dsdgfg56egdfg",
-        "metadata": "test"
+        user_name: "tsangzeng85",
+        password: "qew898",
+        trade_no: "26dsdgfg56egdfg",
+        metadata: "test"
     }
     var opt = {
         url: "https://api.bubidev.cn/account/v1/register?access_token=" + global.blockToken,
         method: "POST",
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
         },
         form: formData
     };
