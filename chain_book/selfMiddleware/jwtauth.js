@@ -12,10 +12,10 @@ var authIsUser = function (req, res, next) {
             // handle token here
             if (decoded.exp <= Date.now()) {
                 res.json({
-                        error_code: 1006,
-                        msg: '登录过期'
-                    });
-                    return res
+                    error_code: 1006,
+                    msg: '登录过期'
+                });
+                return res
             }
             User.getUserById(decoded.iss, function (err, user) {
                 if (err) {
@@ -75,10 +75,40 @@ var authIsBookOwner = function (req, res, next) {
                     msg: '无权限操作该账本'
                 });
                 return res
-            } else if (book.isPlulic){
+            } else if (book.isPlulic) {
                 res.json({
                     error_code: 1017,
                     msg: '账本已发布，无法修改'
+                });
+                return res
+            } else {
+                console.log('属于该用户');
+                next(); //解析正确的next()
+            }
+        }
+    })
+}
+
+var isBookOwner = function (req, res, next) {
+    var bookId = (req.body.bookId) || (req.query.bookId);
+    Book.getBookById(bookId, function (err, book) {
+        if (err) {
+            res.json({
+                error_code: 1001,
+                msg: '数据库操作错误'
+            });
+            return res
+        } else {
+            if (!book) {
+                res.json({
+                    error_code: 1012,
+                    msg: '账本不存在'
+                });
+                return res
+            } else if (book.founderId.toString() != res.locals.user._id.toString()) {
+                res.json({
+                    error_code: 1016,
+                    msg: '无权限操作该账本'
                 });
                 return res
             } else {
@@ -113,4 +143,5 @@ var authIsBookItem = function (req, res, next) {
 
 exports.authIsUser = authIsUser;
 exports.authIsBookOwner = authIsBookOwner;
+exports.isBookOwner = isBookOwner;
 exports.authIsBookItem = authIsBookItem;

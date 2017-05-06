@@ -102,7 +102,7 @@ exports.getallBookInfo = function(id, callback) {
 
 
 /**
- * 根据账本founderId, page, pageSize查找属于该用户的全部账本
+ * 根据账本founderId, page, pageSize查找属于该用户的全部未公示的账本
  * Callback:
  * - err, 数据库异常
  * - Query, 结果对象
@@ -117,7 +117,7 @@ exports.queryBookByFounder = function(founderId, page, pageSize, callback) {
     var $page = {
         pageNumber: page
     };
-    Book.find({ founderId: founderId }, opt).skip(start).limit(Number(pageSize)).sort({update_at: 'desc'}).exec(
+    Book.find({ founderId: founderId, isPublic: false }, opt).skip(start).limit(Number(pageSize)).sort({update_at: 'desc'}).exec(
         function (err, doc) {
             callback(err, doc)
         }
@@ -134,7 +134,7 @@ exports.queryBookByFounder = function(founderId, page, pageSize, callback) {
  */
 exports.queryLatestBook = function(founderId, callback) {
     var opt = { "_id": 1, "picUrl": 1, "intro": 1, "place": 1, "title": 1, "partyTime":1 , "create_at": 1, "isPublic": 1, "sum": 1, "spend": 1, "balance": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明
-    Book.find({ founderId: founderId }, opt).sort({update_at: 'desc'}).exec(
+    Book.find({ founderId: founderId, isPublic: false }, opt).sort({update_at: 'desc'}).exec(
         function (err, doc) {
             console.log(doc)
             callback(err, doc[0])

@@ -1,5 +1,9 @@
 var express = require('express');
 var moment = require('moment');
+// var smushit = require('node-smushit');
+var imagemin = require('imagemin');
+const imageminJpegtran = require('imagemin-jpegtran');
+const imageminPngquant = require('imagemin-pngquant');
 var router = express.Router();
 var Book = require('../proxy/book');
 var async = require('async');
@@ -14,7 +18,7 @@ var fs = require('fs');
 var path = require('path');
 
 //图片上传，后要添加是否为user的判断
-router.post('/bookPic/uploading', function (req, res, next) {
+router.post('/bookPic/uploading', jwtauth.authIsUser, function (req, res, next) {
     //生成multiparty对象，并配置上传目标路径
     var form = new multiparty.Form({
         uploadDir: './public/files/'
@@ -31,14 +35,29 @@ router.post('/bookPic/uploading', function (req, res, next) {
                 console.log('rename error: ' + err);
             } else {
                 console.log('rename ok');
+                imagemin([newPath], './public/files', {
+                    plugins: [
+                        imageminJpegtran(),
+                        imageminPngquant({
+                            quality: '65-80'
+                        })
+                    ]
+                }).then((files => {
+                    console.log(files)
+                    res.json({
+                        error_code: 0,
+                        msg: "上传成功",
+                        name: tmp_name
+                    })
+                }), err => {
+                    res.json({
+                        error_code: 1018,
+                        msg: "压缩失败",
+                        name: tmp_name
+                    })
+                })
             }
         });
-        res.json({
-            error_code: 0,
-            msg: "上传成功",
-            name: tmp_name
-        })
-        console.log("完成")
     });
 });
 
@@ -76,7 +95,10 @@ router.get('/getBooks*', jwtauth.authIsUser, function (req, res, next) {
             });
             return res;
         } else {
-            res.json(book)
+            res.json({
+                error_code: 0,
+                data: book
+            });
         }
     })
 });
