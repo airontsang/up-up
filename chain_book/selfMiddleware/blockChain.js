@@ -100,6 +100,77 @@ var createBlock = function (dataHash) {
     return defer.promise;
 }
 
+var refreshBlock = function (evidenceId, dataHash) {
+    var tradeNo = Math.random().toString(36).substr(2,9);
+    var formData = {
+        trade_no: tradeNo,
+        evidence_id: evidenceId,
+        signers: [{
+            bubi_address: "bubiV8hzUjae4kvhKdmrX8zNzNxVDogprpuw1Jmh",
+            password: "123456",
+        }],
+        metadata: dataHash
+    }
+    var opt = {
+        url: "https://api.bubidev.cn/evidence/v2/modify?access_token=" + global.blockToken,
+        method: "POST",
+        json: formData
+    };
+    var defer = Q.defer();
+    var reg_back = request(opt, function (error, response, body) {
+        // var res = JSON.parse(response.body);
+        console.log(response.body)
+        if (!error && response.body.err_code === "0") {
+            console.log('OK');
+            console.log(response.body.data.evidence_id);
+            var bubiRes = {}
+            bubiRes.bc_hash = response.body.data.bc_hash;
+            defer.resolve(bubiRes);
+        } else if (response.body.data.err_code !== "0") {
+            console.log("没有操作")
+            console.log(response.body)
+            defer.reject(response.body);
+        } else {
+            console.log("网络错误")
+            console.log(error)
+            defer.reject(error);
+        }
+    })
+    return defer.promise;
+}
+
+var checkBlock = function (bcHash) {
+    var bubi_address = "bubiV8hzUjae4kvhKdmrX8zNzNxVDogprpuw1Jmh"
+    var opt = {
+        url: "https://api.bubidev.cn/evidence/v1/history?bubi_address=" + bubi_address + "&access_token=" + global.blockToken,
+        method: "GET",
+    };
+    var defer = Q.defer();
+    var reg_back = request(opt, function (error, response, body) {
+        console.log(response.body)
+        if (!error && response.body.err_code === "0") {
+            console.log(response.body.data);
+            var bubiData = response.body.data;
+            var targetMeta = "";
+            bubiData.forEach( function (item) {
+                if(item.hash == bcHash){
+                    targetMeta = item.metadata
+                }
+            })
+            defer.resolve(targetMeta);
+        } else if (response.body.data.err_code !== "0") {
+            console.log("没有操作")
+            console.log(response.body)
+            defer.reject(response.body);
+        } else {
+            console.log("网络错误")
+            console.log(error)
+            defer.reject(error);
+        }
+    })
+    return defer.promise;
+}
+
 
 exports.getBlockToken = getBlockToken;
 exports.createBlock = createBlock;
