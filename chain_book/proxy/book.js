@@ -125,6 +125,47 @@ exports.queryBookByFounder = function(founderId, page, pageSize, callback) {
 }
 
 /**
+ * 根据账本founderId, page, pageSize查找属于该用户的全部公示账本
+ * Callback:
+ * - err, 数据库异常
+ * - Query, 结果对象
+ * @param {ObjectId} founderId 创建人id
+ * @param {String} page 页码
+ * @param {String} pageSize 每页大小  
+ * @param {Function} callback 回调函数
+ */
+exports.queryPublicedBook = function(founderId, page, pageSize, callback) {
+    var start = (page - 1) * pageSize;
+    var opt = { "_id": 1, "picUrl": 1, "intro": 1, "title": 1, "update_at": 1, "sum": 1, "spend": 1, "balance": 1,"dbHash": 1,"bcHash": 1,"evidenceId": 1 } //没有标记的字段自动忽略，只有忽略_id时要标明    
+    var $page = {
+        pageNumber: page
+    };
+    Book.find({ founderId: founderId, isPublic: true }, opt).skip(start).limit(Number(pageSize)).sort({update_at: 'desc'}).exec(
+        function (err, doc) {
+            callback(err, doc)
+        }
+    )
+}
+
+/**
+ * 二维码入口，获取一个公共账本
+ * Callback:
+ * - err, 数据库异常
+ * - Query, 结果对象
+ * @param {ObjectId} founderId 创建人id
+ * @param {String} page 页码
+ * @param {String} pageSize 每页大小  
+ * @param {Function} callback 回调函数
+ */
+exports.onePublicedBook = function(bookId, callback) {  
+    Book.findOne({ _id: bookId, isPublic: true }).exec(
+        function (err, doc) {
+            callback(err, doc)
+        }
+    )
+}
+
+/**
  * 根据账本founderId查找属于该用户的最近编辑的第一个账本
  * Callback:
  * - err, 数据库异常

@@ -55,7 +55,7 @@ router.post('/create', [jwtauth.authIsUser, jwtauth.authIsBookOwner, blockChain.
         } else {
             blockChain.createBlock(arg1.toBlockHash).then(function (result) {
                 var evidenceObj = {}
-                evidenceObj.dbHash = arg1;
+                evidenceObj.dbHash = arg1.toBlockHash;
                 evidenceObj.bc_hash = result.bc_hash;
                 evidenceObj.evidence_id = result.evidence_id;
                 callback(null, evidenceObj);
@@ -78,6 +78,7 @@ router.post('/create', [jwtauth.authIsUser, jwtauth.authIsBookOwner, blockChain.
                     console.log(query);
                     res.statusCode = 200;
                     res.json({
+                        error_code: 0,                        
                         msg: '写入区块链成功'
                     });
                     return res;

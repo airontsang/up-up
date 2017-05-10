@@ -23,6 +23,7 @@ router.post('/addBookItem*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], func
             cb(null, doc) //doc可能有值返回，但不重要
         })
     }
+
     function count(arg1, cb) {
         BookItem.allBookItemById(newBookItem.bookId, function (err, doc) {
             var sum, spend, balance = 0;
@@ -42,6 +43,7 @@ router.post('/addBookItem*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], func
             cb(null, sheet)
         })
     }
+
     function toBook(arg1, cb) {
         Book.writeMoney(newBookItem.bookId, arg1, function (err, result) {
             if (err) {
@@ -83,9 +85,15 @@ router.get('/getBookItem*', [jwtauth.authIsUser, jwtauth.isBookOwner], function 
             return res;
         } else {
             res.json({
-                error_code: 0,
-                data: bookItemList
-            });
+                    error_code: 0,
+                    data: bookItemList
+                });
+            // setTimeout(function () {
+            //     res.json({
+            //         error_code: 0,
+            //         data: bookItemList
+            //     });
+            // }, 4000)
         }
     })
 });
@@ -126,7 +134,7 @@ router.put('/editBookItem*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], func
     //     })
     // }
     function editBookItem(cb) {
-        
+
         BookItem.editBookItemBybookId(req.body.bookItemId, modifiedBookItem, function (err, query) {
             if (err) {
                 cb(err, null)
@@ -135,6 +143,7 @@ router.put('/editBookItem*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], func
             }
         })
     }
+
     function count(arg1, cb) {
         BookItem.allBookItemById(req.body.bookId, function (err, doc) {
             var sum, spend, balance = 0;
@@ -153,6 +162,7 @@ router.put('/editBookItem*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], func
             cb(null, sheet)
         })
     }
+
     function toBook(arg1, cb) {
         Book.writeMoney(req.body.bookId, arg1, function (err, result) {
             if (err) {
@@ -211,6 +221,7 @@ router.delete('/delBookItem', [jwtauth.authIsUser, jwtauth.authIsBookOwner], fun
             }
         })
     }
+
     function count(arg1, cb) {
         BookItem.allBookItemById(req.query.bookId, function (err, doc) {
             var sum, spend, balance = 0;
@@ -229,6 +240,7 @@ router.delete('/delBookItem', [jwtauth.authIsUser, jwtauth.authIsBookOwner], fun
             cb(null, sheet)
         })
     }
+
     function toBook(arg1, cb) {
         Book.writeMoney(req.query.bookId, arg1, function (err, result) {
             if (err) {

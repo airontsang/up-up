@@ -103,6 +103,41 @@ router.get('/getBooks*', jwtauth.authIsUser, function (req, res, next) {
     })
 });
 
+
+router.get('/getPublicedBooks*', jwtauth.authIsUser, function (req, res, next) {
+    Book.queryPublicedBook(res.locals.user._id, req.query.pageIndex, req.query.pageSize, function (err, book) {
+        if (err) {
+            res.json({
+                error_code: 1001,
+                msg: '数据库操作错误'
+            });
+            return res;
+        } else {
+            res.json({
+                error_code: 0,
+                data: book
+            });
+        }
+    })
+});
+
+router.get('/onePublicedBook*', function (req, res, next) {
+    Book.onePublicedBook(req.query.bookId, function (err, book) {
+        if (err) {
+            res.json({
+                error_code: 1001,
+                msg: '数据库操作错误'
+            });
+            return res;
+        } else {
+            res.json({
+                error_code: 0,
+                data: book
+            });
+        }
+    })
+});
+
 router.get('/getIndexBook*', jwtauth.authIsUser, function (req, res, next) {
     function getIndexBookId(callback) {
         Book.queryBookByFounder(res.locals.user._id, 1, 1, function (err, book) {
@@ -125,10 +160,12 @@ router.get('/getIndexBook*', jwtauth.authIsUser, function (req, res, next) {
         getFourBookItem,
     ], function (err, result) {
         if (!err) {
-            res.json({
-                error_code: 0,
-                data: result
-            })
+            setTimeout(function() {
+                res.json({
+                    error_code: 0,
+                    data: result
+                })
+            }, 4000)
         } else {
             res.json({
                 error_code: 1001,

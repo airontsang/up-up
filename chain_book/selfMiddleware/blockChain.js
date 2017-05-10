@@ -87,7 +87,7 @@ var createBlock = function (dataHash) {
             bubiRes.evidence_id = response.body.data.evidence_id;
             bubiRes.bc_hash = response.body.data.bc_hash;
             defer.resolve(bubiRes);
-        } else if (response.body.data.err_code !== "0") {
+        } else if (response.body.err_code !== "0") {
             console.log("没有操作")
             console.log(response.body)
             defer.reject(response.body);
