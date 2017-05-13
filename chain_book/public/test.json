@@ -916,7 +916,84 @@
           "401": {
             "description": "Error response",
             "schema": {
-              "title": "reg_Error_Info",
+              "title": "reg_Error_Info"
+            }
+          }
+        }
+      }
+    },
+    "/toBlock/cancel": {
+      "get": {
+        "description": "cancelPublicedBook \n",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "token",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "bookId",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "tags": [
+          "BlockChain"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Login_Info",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/toBlock/check": {
+      "get": {
+        "description": "checkdbHash \n",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "query",
+            "description": "bookId",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "evidenceId",
+            "in": "query",
+            "description": "evidenceId",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "bcHash",
+            "in": "query",
+            "description": "bcHash",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "tags": [
+          "BlockChain"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "Login_Info",
               "type": "string"
             }
           }

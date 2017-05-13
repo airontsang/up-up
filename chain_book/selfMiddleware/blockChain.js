@@ -139,18 +139,18 @@ var refreshBlock = function (evidenceId, dataHash) {
     return defer.promise;
 }
 
-var checkBlock = function (bcHash) {
-    var bubi_address = "bubiV8hzUjae4kvhKdmrX8zNzNxVDogprpuw1Jmh"
+var checkBlock = function (evidenceId, bcHash) {
     var opt = {
-        url: "https://api.bubidev.cn/evidence/v1/history?bubi_address=" + bubi_address + "&access_token=" + global.blockToken,
+        url: "https://api.bubidev.cn/evidence/v1/history?bubi_address=" + evidenceId + "&access_token=" + global.blockToken,
         method: "GET",
     };
     var defer = Q.defer();
     var reg_back = request(opt, function (error, response, body) {
-        console.log(response.body)
-        if (!error && response.body.err_code === "0") {
-            console.log(response.body.data);
-            var bubiData = response.body.data;
+        // console.log(response.body)
+        var res = {}
+        res = JSON.parse(response.body)
+        if (!error && res.err_code === "0") {
+            var bubiData = res.data.transactions;
             var targetMeta = "";
             bubiData.forEach( function (item) {
                 if(item.hash == bcHash){
@@ -158,10 +158,6 @@ var checkBlock = function (bcHash) {
                 }
             })
             defer.resolve(targetMeta);
-        } else if (response.body.data.err_code !== "0") {
-            console.log("没有操作")
-            console.log(response.body)
-            defer.reject(response.body);
         } else {
             console.log("网络错误")
             console.log(error)
@@ -175,3 +171,4 @@ var checkBlock = function (bcHash) {
 exports.getBlockToken = getBlockToken;
 exports.createBlock = createBlock;
 exports.BlockTokenMW = BlockTokenMW;
+exports.checkBlock  = checkBlock;

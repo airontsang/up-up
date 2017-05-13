@@ -49,6 +49,23 @@ exports.editBookById = function(id, newBook, callback) {
         })
 }
 
+
+/**
+ * 根据账本Id修改公布标识
+ * Callback:
+ * - err, 数据库异常
+ * - Query, 结果对象
+ * @param {String} id 账本id
+ * @param {Function} callback 回调函数
+ */
+exports.cancelBook = function(id, callback) {
+    Book.update({_id: id}, {$set: { isPublic: false, update_at: new Date() }}).exec(
+        function(err, result){
+            callback(err, result)
+        })
+}
+
+
 /**
  * 根据账本Id删除账本
  * Callback:

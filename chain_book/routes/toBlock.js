@@ -78,7 +78,7 @@ router.post('/create', [jwtauth.authIsUser, jwtauth.authIsBookOwner, blockChain.
                     console.log(query);
                     res.statusCode = 200;
                     res.json({
-                        error_code: 0,                        
+                        error_code: 0,
                         msg: '写入区块链成功'
                     });
                     return res;
@@ -93,9 +93,27 @@ router.post('/create', [jwtauth.authIsUser, jwtauth.authIsBookOwner, blockChain.
     })
 })
 
+router.get('/cancel', [jwtauth.authIsUser, jwtauth.authIsBookOwner], function (req, res) {
+    Book.cancelBook(req.query.bookId, function (err, result) {
+        if (!err) {
+            res.statusCode = 200;
+            res.json({
+                error_code: 0,
+                msg: result
+            });
+            return res;
+        } else {
+            res.json({
+                error_code: 1018,
+                msg: err
+            })
+        }
+    })
+})
+
 router.get('/check', function (req, res) {
     function getBookString(callback) {
-        Book.getallBookInfo(req.body.bookId, function (err, doc) {
+        Book.getallBookInfo(req.query.bookId, function (err, doc) {
             var sha1 = crypto.createHash('sha1');
             var bookInfoHash = sha1.update(JSON.stringify(doc)).digest('hex');
             callback(null, bookInfoHash)
@@ -103,7 +121,7 @@ router.get('/check', function (req, res) {
     };
 
     function getBookItemString(arg1, callback) {
-        BookItem.getAllBookItemByBookId(req.body.bookId, function (err, doc) {
+        BookItem.getAllBookItemByBookId(req.query.bookId, function (err, doc) {
             var bookItemString = doc.join('');
             var sha1 = crypto.createHash('sha1');
             var allItemHash = sha1.update(bookItemString).digest('hex');
@@ -119,7 +137,7 @@ router.get('/check', function (req, res) {
         getBookItemString,
     ], function (err, dbHash) {
         console.log("计算出的哈希" + dbHash);
-        blockChain.checkBlock(req.query.bcHash).then(function (result) {
+        blockChain.checkBlock(req.query.evidenceId, req.query.bcHash).then(function (result) {
             var checkResult = {}
             checkResult.dbHash = dbHash;
             checkResult.bcMeta = result;

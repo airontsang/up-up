@@ -160,12 +160,16 @@ router.get('/getIndexBook*', jwtauth.authIsUser, function (req, res, next) {
         getFourBookItem,
     ], function (err, result) {
         if (!err) {
-            setTimeout(function() {
-                res.json({
+            res.json({
                     error_code: 0,
                     data: result
                 })
-            }, 4000)
+            // setTimeout(function() {
+            //     res.json({
+            //         error_code: 0,
+            //         data: result
+            //     })
+            // }, 4000)
         } else {
             res.json({
                 error_code: 1001,
