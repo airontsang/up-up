@@ -41,11 +41,15 @@ router.post('/create', [jwtauth.authIsUser, jwtauth.authIsBookOwner, blockChain.
         //为真，则是修改
         if (arg1.state) {
             blockChain.refreshBlock(req.body.evidenceId, arg1.toBlockHash).then(function (result) {
-                var evidenceObj = {}
-                evidenceObj.dbHash = arg1.toBlockHash;
-                evidenceObj.bc_hash = result.bc_hash;
-                evidenceObj.evidence_id = req.body.evidenceId;
-                callback(null, evidenceObj);
+                if (result.hasOwnProperty('bc_hash')) { //正确回复，有bc_hash
+                    var evidenceObj = {}
+                    evidenceObj.dbHash = arg1.toBlockHash;
+                    evidenceObj.bc_hash = result.bc_hash;
+                    evidenceObj.evidence_id = result.evidence_id;
+                    callback(null, evidenceObj);
+                } else {
+                    callback('更新区块链超时', null);
+                }
             }).fail(function (err) {
                 res.json({
                     msg: err
@@ -54,11 +58,16 @@ router.post('/create', [jwtauth.authIsUser, jwtauth.authIsBookOwner, blockChain.
             })
         } else {
             blockChain.createBlock(arg1.toBlockHash).then(function (result) {
-                var evidenceObj = {}
-                evidenceObj.dbHash = arg1.toBlockHash;
-                evidenceObj.bc_hash = result.bc_hash;
-                evidenceObj.evidence_id = result.evidence_id;
-                callback(null, evidenceObj);
+                console.log(result)
+                if (result.hasOwnProperty('bc_hash')) { //正确回复，有bc_hash
+                    var evidenceObj = {}
+                    evidenceObj.dbHash = arg1.toBlockHash;
+                    evidenceObj.bc_hash = result.bc_hash;
+                    evidenceObj.evidence_id = result.evidence_id;
+                    callback(null, evidenceObj);
+                } else {
+                    callback('写入区块链超时', null);
+                }
             }).fail(function (err) {
                 res.json({
                     msg: err
@@ -147,6 +156,7 @@ router.get('/check', function (req, res) {
             })
         }).fail(function (err) {
             res.json({
+                error_code: 1018,
                 msg: err
             });
             return res;

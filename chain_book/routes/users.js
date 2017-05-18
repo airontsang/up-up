@@ -48,11 +48,11 @@ router.get('/Login*', function (req, res, next) {
 
 router.post('/reg*', function (req, res, next) {
   var newUser = {};
-  newUser.loginId = req.query.loginId;
+  newUser.loginId = req.body.loginId;
   var md5 = crypto.createHash('md5');
-  newUser.passWord = md5.update(req.query.passWord).digest('hex');
+  newUser.passWord = md5.update(req.body.passWord).digest('hex');
 
-  User.getUserById(req.query.loginId, function (err, user) {
+  User.getUserById(req.body.loginId, function (err, user) {
     if (err) {
       res.json({
         error_code: 1001,

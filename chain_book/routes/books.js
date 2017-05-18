@@ -141,18 +141,24 @@ router.get('/onePublicedBook*', function (req, res, next) {
 router.get('/getIndexBook*', jwtauth.authIsUser, function (req, res, next) {
     function getIndexBookId(callback) {
         Book.queryBookByFounder(res.locals.user._id, 1, 1, function (err, book) {
+
             callback(null, book);
         })
     }
 
     function getFourBookItem(arg1, callback) {
-        console.log(arg1[0]._id);
-        BookItem.querySomeBookItemByBook(arg1[0]._id, 1, 4, function (err, bookItems) {
-            var indexBook = {}
-            indexBook.info = arg1[0]
-            indexBook.bookItems = bookItems
-            callback(null, indexBook)
-        })
+        console.log(arg1)
+        if (arg1.length == 0) {
+            callback(null, null)
+        } else {
+            BookItem.querySomeBookItemByBook(arg1[0]._id, 1, 4, function (err, bookItems) {
+                var indexBook = {}
+                indexBook.info = arg1[0]
+                indexBook.bookItems = bookItems
+                callback(null, indexBook)
+            })
+        }
+
     }
 
     async.waterfall([
@@ -164,12 +170,12 @@ router.get('/getIndexBook*', jwtauth.authIsUser, function (req, res, next) {
                     error_code: 0,
                     data: result
                 })
-            // setTimeout(function() {
-            //     res.json({
-            //         error_code: 0,
-            //         data: result
-            //     })
-            // }, 4000)
+                // setTimeout(function() {
+                //     res.json({
+                //         error_code: 0,
+                //         data: result
+                //     })
+                // }, 4000)
         } else {
             res.json({
                 error_code: 1001,
