@@ -75,7 +75,7 @@ router.post('/addBookItem*', [jwtauth.authIsUser, jwtauth.authIsBookOwner], func
     })
 });
 
-router.get('/getBookItem*', [jwtauth.authIsUser, jwtauth.isBookOwner], function (req, res, next) {
+router.get('/getBookItem*', function (req, res, next) {
     BookItem.querySomeBookItemByBook(req.query.bookId, req.query.pageIndex, req.query.pageSize, function (err, bookItemList) {
         if (err) {
             res.json({

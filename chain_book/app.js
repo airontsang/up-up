@@ -74,9 +74,11 @@ console.log("进来就执行");
 getBlockToken.getBlockToken();
 var rule = new schedule.RecurrenceRule();
 
-rule.minute = 1;
+rule.second = [25];
+// rule.minute = 1;
 
 var j = schedule.scheduleJob(rule, function () {
+  // console.log(Date.now)
   console.log("执行任务");
   getBlockToken.getBlockToken();
 

@@ -141,7 +141,6 @@ router.get('/onePublicedBook*', function (req, res, next) {
 router.get('/getIndexBook*', jwtauth.authIsUser, function (req, res, next) {
     function getIndexBookId(callback) {
         Book.queryBookByFounder(res.locals.user._id, 1, 1, function (err, book) {
-
             callback(null, book);
         })
     }
